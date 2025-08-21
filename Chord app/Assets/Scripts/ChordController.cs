@@ -5,6 +5,47 @@ using UnityEngine;
 public class ChordController : MonoBehaviour
 {
     Dictionary<Intervals, int> intervalsSemitonesDictionary = new Dictionary<Intervals, int>();
+
+    public Chord major;
+    public Chord minor;
+    public Chord dominantSeventh;
+    public Chord minorSeventh;
+    public Chord majorSeventh;
+    public Chord minorMajorSeventh;
+    public Chord sixth;
+    public Chord minorSixth;
+    public Chord sixthNinth;
+    public Chord fifth;
+    public Chord dominantNinth;
+    public Chord minorNinth;
+    public Chord majorNinth;
+    public Chord dominantEleventh;
+    public Chord minorEleventh;
+    public Chord majorEleventh;
+    public Chord dominantThirteenth;
+    public Chord minorThirteenth;
+    public Chord majorThirteenth;
+    public Chord addNinth;
+    public Chord addSecond;
+    public Chord seventhFlatFifth;
+    public Chord seventhSharpFifth;
+    public Chord sus2;
+    public Chord sus4;
+    public Chord dim;
+    public Chord dimSeventh;
+    public Chord halfDimSeventh;
+    public Chord minorSeventhFlatFifth;
+    public Chord aug;
+    public Chord augSeventh;
+
+    public MasterChord currentMasterChord;
+    public Chord currentChord;
+
+    public List<int> chordIntervals = new List<int>();
+
+
+    
+
     private void Awake()
     {
 
@@ -38,6 +79,43 @@ public class ChordController : MonoBehaviour
         intervalsSemitonesDictionary.Add(Intervals.MajorFourteenth, 23);
         intervalsSemitonesDictionary.Add(Intervals.Fifteenth, 24);
     }
+
+    public void Start()
+    {
+        //for testing 
+        currentMasterChord = MasterChord.C;
+
+        currentChord = dominantSeventh;
+
+
+       
+
+    }
+
+    public void GetNotesButton()
+    {
+        chordIntervals = CalculateNotes(currentMasterChord, currentChord);
+
+        //testing
+        Debug.Log(currentChord);
+        for (int i = 0; i < chordIntervals.Count; i++)
+        {
+            Debug.Log(currentChord.intervalsList[i] + " " + chordIntervals[i]);
+        }
+    }
+
+    public List<int> CalculateNotes(MasterChord masterChord, Chord chord)
+    {
+        List<int> list = new List<int>();
+        chordIntervals.Clear();
+
+        foreach (Intervals interval in currentChord.intervalsList)
+        {
+            list.Add(intervalsSemitonesDictionary[interval]);
+        }
+
+        return list;
+    }
 }
 
 public enum MasterChord
@@ -61,6 +139,7 @@ public enum MasterChord
     B
 
 }
+
 
 public enum ChordType
 {
@@ -131,5 +210,7 @@ public enum Intervals
     Fifteenth
 
 }
+
+
 
 
