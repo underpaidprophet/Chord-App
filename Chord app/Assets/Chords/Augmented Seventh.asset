@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb1ded96da337a4a932c2acbb8cb86e, type: 3}
   m_Name: Augmented Seventh
   m_EditorClassIdentifier: 
-  chordType: 30
+  chordType: 29
   intervalsList: 0000000004000000090000000d000000

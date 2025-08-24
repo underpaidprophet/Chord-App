@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb1ded96da337a4a932c2acbb8cb86e, type: 3}
   m_Name: Minor Seventh Flat Fifth
   m_EditorClassIdentifier: 
-  chordType: 28
+  chordType: 27
   intervalsList: 0000000003000000070000000d000000

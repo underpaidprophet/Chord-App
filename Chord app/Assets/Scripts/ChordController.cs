@@ -33,7 +33,7 @@ public class ChordController : MonoBehaviour
     public Chord sus4;
     public Chord dim;
     public Chord dimSeventh;
-    public Chord halfDimSeventh;
+   
     public Chord minorSeventhFlatFifth;
     public Chord aug;
     public Chord augSeventh;
@@ -43,8 +43,13 @@ public class ChordController : MonoBehaviour
 
     public List<int> chordIntervals = new List<int>();
 
+    public Dictionary<ChordType, Chord> chordTypeDict = new Dictionary<ChordType, Chord>();
 
+
+    public Dictionary<MasterChord, string> masterChordNameDict = new Dictionary<MasterChord, string>();
+    public Dictionary<ChordType, string> chordTypeNameDict = new Dictionary<ChordType, string>();
     
+
 
     private void Awake()
     {
@@ -78,6 +83,87 @@ public class ChordController : MonoBehaviour
         intervalsSemitonesDictionary.Add(Intervals.MinorFourteenth, 22);
         intervalsSemitonesDictionary.Add(Intervals.MajorFourteenth, 23);
         intervalsSemitonesDictionary.Add(Intervals.Fifteenth, 24);
+
+        masterChordNameDict.Add(MasterChord.C, "C");
+        masterChordNameDict.Add(MasterChord.CSharp, "C#");
+        masterChordNameDict.Add(MasterChord.DFlat, "Db");
+        masterChordNameDict.Add(MasterChord.D, "D");
+        masterChordNameDict.Add(MasterChord.DSharp, "D#");
+        masterChordNameDict.Add(MasterChord.EFlat, "Eb");
+        masterChordNameDict.Add(MasterChord.E, "E");
+        masterChordNameDict.Add(MasterChord.F, "F");
+        masterChordNameDict.Add(MasterChord.FSharp, "F#");
+        masterChordNameDict.Add(MasterChord.GFlat, "Gb");
+        masterChordNameDict.Add(MasterChord.G, "G");
+        masterChordNameDict.Add(MasterChord.GSharp, "G#");
+        masterChordNameDict.Add(MasterChord.AFlat, "Ab");
+        masterChordNameDict.Add(MasterChord.A, "A");
+        masterChordNameDict.Add(MasterChord.ASharp, "A#");
+        masterChordNameDict.Add(MasterChord.BFlat, "Bb");
+        masterChordNameDict.Add(MasterChord.B, "B");
+
+
+        chordTypeNameDict.Add(ChordType.Major, "");
+        chordTypeNameDict.Add(ChordType.Minor, "-");
+        chordTypeNameDict.Add(ChordType.DominantSeventh, "7");
+        chordTypeNameDict.Add(ChordType.MinorSeventh, "-7");
+        chordTypeNameDict.Add(ChordType.MajorSeventh, "maj7");
+        chordTypeNameDict.Add(ChordType.MinorMajorSeventh, "mM7");
+        chordTypeNameDict.Add(ChordType.Sixth, "6");
+        chordTypeNameDict.Add(ChordType.MinorSixth, "-6");
+        chordTypeNameDict.Add(ChordType.SixthNinth, "6/9");
+        chordTypeNameDict.Add(ChordType.Fifth, "5");
+        chordTypeNameDict.Add(ChordType.DominantNinth, "9");
+        chordTypeNameDict.Add(ChordType.MinorNinth, "-9");
+        chordTypeNameDict.Add(ChordType.MajorNinth, "maj9");
+        chordTypeNameDict.Add(ChordType.DominantEleventh, "11");
+        chordTypeNameDict.Add(ChordType.MinorEleventh, "-11");
+        chordTypeNameDict.Add(ChordType.MajorEleventh, "maj11");
+        chordTypeNameDict.Add(ChordType.DominantThirteenth, "13");
+        chordTypeNameDict.Add(ChordType.MinorThirteenth, "-13");
+        chordTypeNameDict.Add(ChordType.MajorThirteenth, "maj13");
+        chordTypeNameDict.Add(ChordType.AddNinth, "add9");
+        chordTypeNameDict.Add(ChordType.AddSecond, "add2");
+        chordTypeNameDict.Add(ChordType.SeventhFlatFifth, "7b5");
+        chordTypeNameDict.Add(ChordType.SeventhSharpFifth, "7#5");
+        chordTypeNameDict.Add(ChordType.Sus2, "sus2");
+        chordTypeNameDict.Add(ChordType.Sus4, "sus4");
+        chordTypeNameDict.Add(ChordType.Dim, "°");
+        chordTypeNameDict.Add(ChordType.DimSeventh, "°7");
+        chordTypeNameDict.Add(ChordType.MinorSeventhFlatFifth, "m7b5");
+        chordTypeNameDict.Add(ChordType.Aug, "aug");
+        chordTypeNameDict.Add(ChordType.AugSeventh, "aug7");
+
+        chordTypeDict.Add(ChordType.Major, major);
+   chordTypeDict.Add(ChordType.Minor, minor);
+        chordTypeDict.Add(ChordType.DominantSeventh, dominantSeventh);
+        chordTypeDict.Add(ChordType.MinorSeventh, minorSeventh);
+        chordTypeDict.Add(ChordType.MajorSeventh,majorSeventh);
+        chordTypeDict.Add(ChordType.MinorMajorSeventh,minorMajorSeventh);
+        chordTypeDict.Add(ChordType.Sixth, sixth);
+        chordTypeDict.Add(ChordType.MinorSixth, minorSixth);
+        chordTypeDict.Add(ChordType.SixthNinth,sixthNinth);
+        chordTypeDict.Add(ChordType.Fifth, fifth);
+        chordTypeDict.Add(ChordType.DominantNinth, dominantNinth);
+        chordTypeDict.Add(ChordType.MinorNinth, minorNinth);
+        chordTypeDict.Add(ChordType.MajorNinth, majorNinth);
+        chordTypeDict.Add(ChordType.DominantEleventh, dominantEleventh);
+        chordTypeDict.Add(ChordType.MinorEleventh, minorEleventh);
+        chordTypeDict.Add(ChordType.MajorEleventh, majorEleventh);
+        chordTypeDict.Add(ChordType.DominantThirteenth, dominantThirteenth);
+        chordTypeDict.Add(ChordType.MinorThirteenth, minorThirteenth);
+        chordTypeDict.Add(ChordType.MajorThirteenth, majorThirteenth);
+        chordTypeDict.Add(ChordType.AddNinth, addNinth);
+        chordTypeDict.Add(ChordType.AddSecond, addSecond);
+        chordTypeDict.Add(ChordType.SeventhFlatFifth, seventhFlatFifth);
+        chordTypeDict.Add(ChordType.SeventhSharpFifth, seventhSharpFifth);
+        chordTypeDict.Add(ChordType.Sus2, sus2);
+        chordTypeDict.Add(ChordType.Sus4, sus4);
+        chordTypeDict.Add(ChordType.Dim, dim);
+        chordTypeDict.Add(ChordType.DimSeventh, dimSeventh);
+        chordTypeDict.Add(ChordType.MinorSeventhFlatFifth, minorSeventhFlatFifth);
+        chordTypeDict.Add(ChordType.Aug, aug);
+        chordTypeDict.Add(ChordType.AugSeventh, augSeventh);
     }
 
     public void Start()
@@ -87,29 +173,28 @@ public class ChordController : MonoBehaviour
 
         currentChord = dominantSeventh;
 
-
-       
-
     }
 
     public void GetNotesButton()
     {
+        chordIntervals.Clear();
         chordIntervals = CalculateNotes(currentMasterChord, currentChord);
 
         //testing
-        Debug.Log(currentChord);
+       // Debug.Log(currentChord);
         for (int i = 0; i < chordIntervals.Count; i++)
         {
-            Debug.Log(currentChord.intervalsList[i] + " " + chordIntervals[i]);
+          //  Debug.Log(currentChord.intervalsList[i] + " " + chordIntervals[i]);
         }
     }
 
     public List<int> CalculateNotes(MasterChord masterChord, Chord chord)
     {
+     
         List<int> list = new List<int>();
-        chordIntervals.Clear();
+        
 
-        foreach (Intervals interval in currentChord.intervalsList)
+        foreach (Intervals interval in chord.intervalsList)
         {
             list.Add(intervalsSemitonesDictionary[interval]);
         }
@@ -170,7 +255,6 @@ public enum ChordType
    Sus4,
    Dim,
    DimSeventh,
-   HalfDimSeventh,
    MinorSeventhFlatFifth,
    Aug,
    AugSeventh

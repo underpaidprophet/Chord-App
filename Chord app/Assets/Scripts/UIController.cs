@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
     //orange = ffbb40
 
     // the piano keys
+
+    public ChordController chordController;
 
     public bool isOn;
 
@@ -42,9 +46,25 @@ public class UIController : MonoBehaviour
     public Color white;
     public Color orange;
 
+    public Dictionary<MasterChord, Image> firstOctaveMasterChordDict = new Dictionary<MasterChord, Image>();
+
     public List<Image> ListOfKeyImages = new List<Image>();
     public List<Image> ListOfWhiteKeyImages = new List<Image>();
     public List<Image> ListOfBlackKeyImages = new List<Image>();
+    public List<Image> ListOfFirstOctaveKeyImages = new List<Image>();
+
+    //selecting the masterchord
+    public GameObject chooseMasterChordPanel;
+    public GameObject chooseMasterChordButtonParent;
+
+    //selecting the chord type
+    public GameObject chooseChordTypePanel;
+    public GameObject chooseChordTypeButtonParent;
+
+    public GameObject masterChordButtonPrefab;
+    public GameObject chordTypeButtonPrefab;
+
+    public TextMeshProUGUI chordName;
 
     private void Awake()
     {
@@ -98,6 +118,38 @@ public class UIController : MonoBehaviour
         ListOfBlackKeyImages.Add(ASharpBFlat2);
         ListOfWhiteKeyImages.Add(B2);
 
+        ListOfFirstOctaveKeyImages.Add(C1);
+        ListOfFirstOctaveKeyImages.Add(CSharpDFlat1);
+        ListOfFirstOctaveKeyImages.Add(D1);
+        ListOfFirstOctaveKeyImages.Add(DSharpEFlat1);
+        ListOfFirstOctaveKeyImages.Add(E1);
+        ListOfFirstOctaveKeyImages.Add(F1);
+        ListOfFirstOctaveKeyImages.Add(FSharpGFlat1);
+        ListOfFirstOctaveKeyImages.Add(G1);
+        ListOfFirstOctaveKeyImages.Add(GSharpAFlat1);
+        ListOfFirstOctaveKeyImages.Add(A1);
+        ListOfFirstOctaveKeyImages.Add(ASharpBFlat1);
+        ListOfFirstOctaveKeyImages.Add(B1);
+
+        firstOctaveMasterChordDict.Add(MasterChord.C, C1);
+        firstOctaveMasterChordDict.Add(MasterChord.CSharp, CSharpDFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.DFlat, CSharpDFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.D, D1);
+        firstOctaveMasterChordDict.Add(MasterChord.DSharp, DSharpEFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.EFlat, DSharpEFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.E, E1);
+        firstOctaveMasterChordDict.Add(MasterChord.F, F1);
+        firstOctaveMasterChordDict.Add(MasterChord.FSharp, FSharpGFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.GFlat, FSharpGFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.G, G1);
+        firstOctaveMasterChordDict.Add(MasterChord.GSharp, GSharpAFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.AFlat, GSharpAFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.A, A1);
+        firstOctaveMasterChordDict.Add(MasterChord.ASharp, ASharpBFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.BFlat, ASharpBFlat1);
+        firstOctaveMasterChordDict.Add(MasterChord.B, B1);
+
+
         ResetKeyColor();
 
     }
@@ -105,6 +157,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         ResetKeyColor();
+        SetupChooseMasterChordPanel();
     }
 
     public void ResetKeyColor()
@@ -127,7 +180,7 @@ public class UIController : MonoBehaviour
 
     public void SetKeyColour(Image key)
     {
-
+       
         if (ListOfWhiteKeyImages.Contains(key))
         {
             key.color = orange;
@@ -143,22 +196,141 @@ public class UIController : MonoBehaviour
 
     }
 
-    public void TestButton()
+    //this is the function that sets the keys - just all of htem for now
+    public void ShowChordKeys(MasterChord masterChord, Chord chord)
     {
-        switch (isOn)
+        ResetKeyColor();
+
+
+        Image root = firstOctaveMasterChordDict[masterChord];
+
+        int offset = ListOfKeyImages.IndexOf(root);
+
+       // Debug.Log("offset " + offset);
+
+        List<int> notes = chordController.CalculateNotes(masterChord, chord);
+
+        for (int i = 0; i < notes.Count; i++)
         {
-            case true:
-                ResetKeyColor();
-                break;
-            case false:
-                foreach (Image key in ListOfKeyImages)
-                {
-                    SetKeyColour(key);
-                }
-                break;
+            SetKeyColour(ListOfKeyImages[notes[i] + offset]);
+        }
+    }
+
+
+    public void ShowChordButton()
+    {
+      
+
+        ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
+        SetChordText();
+    }
+
+    public void SetupChooseMasterChordPanel()
+    {
+        chooseMasterChordPanel.SetActive(true);
+
+        foreach (MasterChord masterChord in Enum.GetValues(typeof(MasterChord)))
+        {
+            GameObject buttonGO = Instantiate(masterChordButtonPrefab, chooseMasterChordButtonParent.transform);
+
+            
+            MasterChordButtonScript script = buttonGO.GetComponent<MasterChordButtonScript>();
+            
+            script.thisMasterChord = masterChord;
+            script.chordController = chordController;
+            script.uIController = this;
+            script.buttonText.text = chordController.masterChordNameDict[masterChord];
+
+            
+            script.button.onClick.AddListener(script.MasterChordButton);
+            
         }
 
-
+      
     }
+
+    public void SetChordText()
+    {
+        chordName.text = chordController.masterChordNameDict[chordController.currentMasterChord].ToString() + chordController.chordTypeNameDict[chordController.currentChord.chordType].ToString(); 
+    }
+
+    public void SetupChooseChordTypePanel()
+    {
+        
+        chooseChordTypePanel.SetActive(true);
+        ClearButtons(chooseChordTypeButtonParent.transform);
+
+
+        foreach (ChordType chordType in Enum.GetValues(typeof(ChordType)))
+        {
+            GameObject buttonGO = Instantiate(chordTypeButtonPrefab, chooseChordTypeButtonParent.transform);
+
+
+            ChordTypeButtonScript script = buttonGO.GetComponent<ChordTypeButtonScript>();
+            script.thisChordType = chordType;
+            script.chordController = chordController;
+            script.uIController = this;
+            script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordType];
+            script.button.onClick.AddListener(script.ChordTypeButton);
+
+        }
+
+        //for fixing it
+        HighlightErrorOnes();
+    }
+
+    public void ClearButtons(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }
+      
+    }
+
+
+    public void PianoPanelBackButton()
+    {
+        ClearButtons(chooseChordTypeButtonParent.transform);
+        
+        chooseChordTypePanel.SetActive(true);
+        SetupChooseChordTypePanel();
+    }
+
+    public void ChooseChordTypePanelBackButton()
+    {
+        chooseMasterChordPanel.SetActive(true);
+    }
+
+    //so i can find the ones that need a different setyp
+    public void HighlightErrorOnes()
+    {
+       // foreach (KeyValuePair<ChordType, Chord> chord in chordController.chordTypeDict)
+        foreach (Transform child in chooseChordTypeButtonParent.transform)
+        {
+
+            ChordTypeButtonScript chordTypeButtonScript = child.GetComponent<ChordTypeButtonScript>();
+
+
+            Image root = firstOctaveMasterChordDict[chordController.currentMasterChord];
+
+            int offset = ListOfKeyImages.IndexOf(root);
+
+
+
+            List<int> notes = chordController.CalculateNotes(chordController.currentMasterChord, chordController.chordTypeDict[chordTypeButtonScript.thisChordType]);
+
+           
+            if ((notes[notes.Count-1] + offset) >= 24)
+            {
+                chordTypeButtonScript.button.image.color = Color.red;
+
+                //for now
+                chordTypeButtonScript.button.interactable = false;
+
+            }
+        }
+    }
+
 }
 
