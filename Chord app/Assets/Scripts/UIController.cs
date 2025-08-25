@@ -4,12 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using System.Collections;
 
 public class UIController : MonoBehaviour
 {
     //orange = ffbb40
 
     // the piano keys
+
+    //regular location
+    public Vector2 regularKeybaordLocation = new Vector2(-155, 79);
+    public Vector3 regularKeybaordSize = new Vector3(0.5f, 0.5f, 0.5f);
+
+    //extra 5 location
+    public Vector2 extra5KeybaordLocation = new Vector2(-160, 79);
+    public Vector3 extra5KeybaordSize = new Vector3(0.4f, 0.4f, 0.4f);
+
 
     public ChordController chordController;
 
@@ -42,6 +52,11 @@ public class UIController : MonoBehaviour
     public Image A2;
     public Image ASharpBFlat2;
     public Image B2;
+    public Image C3;
+    public Image CSharpDFlat3;
+    public Image D3;
+    public Image DSharpEFlat3;
+    public Image E3;
 
     public Color white;
     public Color orange;
@@ -52,6 +67,9 @@ public class UIController : MonoBehaviour
     public List<Image> ListOfWhiteKeyImages = new List<Image>();
     public List<Image> ListOfBlackKeyImages = new List<Image>();
     public List<Image> ListOfFirstOctaveKeyImages = new List<Image>();
+    public List<Image> ListOfExtra5KeyImages = new List<Image>();
+
+
 
     //selecting the masterchord
     public GameObject chooseMasterChordPanel;
@@ -65,6 +83,11 @@ public class UIController : MonoBehaviour
     public GameObject chordTypeButtonPrefab;
 
     public TextMeshProUGUI chordName;
+
+    public GameObject keyboardLayout;
+    public RectTransform keyboardLayoutRectTransform;
+    
+
 
     private void Awake()
     {
@@ -92,6 +115,11 @@ public class UIController : MonoBehaviour
         ListOfKeyImages.Add(A2);
         ListOfKeyImages.Add(ASharpBFlat2);
         ListOfKeyImages.Add(B2);
+        ListOfKeyImages.Add(C3);
+        ListOfKeyImages.Add(CSharpDFlat3);
+        ListOfKeyImages.Add(D3);
+        ListOfKeyImages.Add(DSharpEFlat3);
+        ListOfKeyImages.Add(E3);
 
         ListOfWhiteKeyImages.Add(C1);
         ListOfBlackKeyImages.Add(CSharpDFlat1);
@@ -117,6 +145,12 @@ public class UIController : MonoBehaviour
         ListOfWhiteKeyImages.Add(A2);
         ListOfBlackKeyImages.Add(ASharpBFlat2);
         ListOfWhiteKeyImages.Add(B2);
+        ListOfWhiteKeyImages.Add(C3);
+        ListOfBlackKeyImages.Add(CSharpDFlat3);
+        ListOfWhiteKeyImages.Add(D3);
+        ListOfBlackKeyImages.Add(DSharpEFlat3);
+        ListOfWhiteKeyImages.Add(E3);
+
 
         ListOfFirstOctaveKeyImages.Add(C1);
         ListOfFirstOctaveKeyImages.Add(CSharpDFlat1);
@@ -148,6 +182,12 @@ public class UIController : MonoBehaviour
         firstOctaveMasterChordDict.Add(MasterChord.ASharp, ASharpBFlat1);
         firstOctaveMasterChordDict.Add(MasterChord.BFlat, ASharpBFlat1);
         firstOctaveMasterChordDict.Add(MasterChord.B, B1);
+
+        ListOfExtra5KeyImages.Add(C3);
+        ListOfExtra5KeyImages.Add(CSharpDFlat3);
+        ListOfExtra5KeyImages.Add(D3);
+        ListOfExtra5KeyImages.Add(DSharpEFlat3);
+        ListOfExtra5KeyImages.Add(E3);
 
 
         ResetKeyColor();
@@ -184,11 +224,13 @@ public class UIController : MonoBehaviour
         if (ListOfWhiteKeyImages.Contains(key))
         {
             key.color = orange;
+          
         }
 
         if (ListOfBlackKeyImages.Contains(key))
         {
             key.sprite = orangeKey;
+           
         }
 
         isOn = true;
@@ -201,6 +243,7 @@ public class UIController : MonoBehaviour
     {
         ResetKeyColor();
 
+        SetKeyboardLayoutSize(masterChord, chord);
 
         Image root = firstOctaveMasterChordDict[masterChord];
 
@@ -212,6 +255,7 @@ public class UIController : MonoBehaviour
 
         for (int i = 0; i < notes.Count; i++)
         {
+            
             SetKeyColour(ListOfKeyImages[notes[i] + offset]);
         }
     }
@@ -320,8 +364,9 @@ public class UIController : MonoBehaviour
 
             List<int> notes = chordController.CalculateNotes(chordController.currentMasterChord, chordController.chordTypeDict[chordTypeButtonScript.thisChordType]);
 
-           
-            if ((notes[notes.Count-1] + offset) >= 24)
+         
+            
+            if ((notes[notes.Count-1] + offset) >= 29)
             {
                 chordTypeButtonScript.button.image.color = Color.red;
 
@@ -329,8 +374,73 @@ public class UIController : MonoBehaviour
                 chordTypeButtonScript.button.interactable = false;
 
             }
+            else if ((notes[notes.Count - 1] + offset) >= 24 )
+            {
+                // chordTypeButtonScript.button.image.color = Color.blue;
+                chordTypeButtonScript.button.interactable = true;
+                //for now
+
+
+            }
         }
     }
 
+    public void SetKeyboardLayoutSize(MasterChord masterChord, Chord chord)
+    {
+
+
+
+        Image root = firstOctaveMasterChordDict[masterChord];
+
+        int offset = ListOfKeyImages.IndexOf(root);
+
+
+
+        List<int> notes = chordController.CalculateNotes(masterChord, chord);
+
+
+
+        if ((notes[notes.Count - 1] + offset) >= 24)
+        {
+            SetupExtra5KeyboardLayout();
+
+        }
+        else
+        {
+            SetupRegularKeyboardLayout();
+        }
+    }
+
+    public void SetupRegularKeyboardLayout()
+    {
+       
+        keyboardLayout.GetComponent<RectTransform>().localScale = regularKeybaordSize;
+    //    keyboardLayout.transform.position = regularKeybaordLocation;
+        foreach (Image image in ListOfExtra5KeyImages)
+        {
+            image.transform.gameObject.SetActive(false);
+        }
+    }
+    public void SetupExtra5KeyboardLayout()
+    {
+      
+        
+   
+
+        keyboardLayoutRectTransform.localScale = extra5KeybaordSize;
+        keyboardLayoutRectTransform.anchoredPosition = extra5KeybaordLocation;
+        foreach (Image image in ListOfExtra5KeyImages)
+        {
+            image.transform.gameObject.SetActive(true);
+        }
+        
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
+
+   
 }
 
