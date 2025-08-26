@@ -61,6 +61,36 @@ public class UIController : MonoBehaviour
     public Image DSharpEFlat3;
     public Image E3;
 
+    public TextMeshProUGUI C1Text;
+    public TextMeshProUGUI CSharpDFlat1Text;
+    public TextMeshProUGUI D1Text;
+    public TextMeshProUGUI DSharpEFlat1Text;
+    public TextMeshProUGUI E1Text;
+    public TextMeshProUGUI F1Text;
+    public TextMeshProUGUI FSharpGFlat1Text;
+    public TextMeshProUGUI G1Text;
+    public TextMeshProUGUI GSharpAFlat1Text;
+    public TextMeshProUGUI A1Text;
+    public TextMeshProUGUI ASharpBFlat1Text;
+    public TextMeshProUGUI B1Text;
+    public TextMeshProUGUI C2Text;
+    public TextMeshProUGUI CSharpDFlat2Text;
+    public TextMeshProUGUI D2Text;
+    public TextMeshProUGUI DSharpEFlat2Text;
+    public TextMeshProUGUI E2Text;
+    public TextMeshProUGUI F2Text;
+    public TextMeshProUGUI FSharpGFlat2Text;
+    public TextMeshProUGUI G2Text;
+    public TextMeshProUGUI GSharpAFlat2Text;
+    public TextMeshProUGUI A2Text;
+    public TextMeshProUGUI ASharpBFlat2Text;
+    public TextMeshProUGUI B2Text;
+    public TextMeshProUGUI C3Text;
+    public TextMeshProUGUI CSharpDFlat3Text;
+    public TextMeshProUGUI D3Text;
+    public TextMeshProUGUI DSharpEFlat3Text;
+    public TextMeshProUGUI E3Text;
+
     public Color white;
     public Color orange;
     public Color purple;
@@ -98,6 +128,10 @@ public class UIController : MonoBehaviour
     public RectTransform keyboardLayoutRectTransform;
 
     public KeyboardLayout currentLayout;
+
+
+    public Dictionary<Image, TextMeshProUGUI> keyTextDict = new Dictionary<Image, TextMeshProUGUI>();
+
 
     private void Awake()
     {
@@ -199,8 +233,39 @@ public class UIController : MonoBehaviour
         ListOfExtra5KeyImages.Add(DSharpEFlat3);
         ListOfExtra5KeyImages.Add(E3);
 
+         keyTextDict.Add(C1, C1Text);
+    keyTextDict.Add(CSharpDFlat1, CSharpDFlat1Text);
+    keyTextDict.Add(D1, D1Text);
+    keyTextDict.Add(DSharpEFlat1, DSharpEFlat1Text);
+    keyTextDict.Add(E1, E1Text);
+    keyTextDict.Add(F1, F1Text);
+    keyTextDict.Add(FSharpGFlat1, FSharpGFlat1Text);
+    keyTextDict.Add(G1, G1Text);
+    keyTextDict.Add(GSharpAFlat1, GSharpAFlat1Text);
+    keyTextDict.Add(A1, A1Text);
+    keyTextDict.Add(ASharpBFlat1, ASharpBFlat1Text);
+    keyTextDict.Add(B1, B1Text);
+    keyTextDict.Add(C2, C2Text);
+    keyTextDict.Add(CSharpDFlat2, CSharpDFlat2Text);
+    keyTextDict.Add(D2, D2Text);
+    keyTextDict.Add(DSharpEFlat2, DSharpEFlat2Text);
+    keyTextDict.Add(E2, E2Text);
+    keyTextDict.Add(F2, F2Text);
+    keyTextDict.Add(FSharpGFlat2, FSharpGFlat2Text);
+    keyTextDict.Add(G2, G2Text);
+    keyTextDict.Add(GSharpAFlat2, GSharpAFlat2Text);
+    keyTextDict.Add(A2, A2Text);
+    keyTextDict.Add(ASharpBFlat2, ASharpBFlat2Text);
+    keyTextDict.Add(B2, B2Text);
+    keyTextDict.Add(C3, C3Text);
+    keyTextDict.Add(CSharpDFlat3, CSharpDFlat3Text);
+    keyTextDict.Add(D3, D3Text);
+    keyTextDict.Add(DSharpEFlat3, DSharpEFlat3Text);
+    keyTextDict.Add(E3, E3Text);
 
-        ResetKeyColor();
+    ResetKeyColor();
+
+
 
     }
 
@@ -223,6 +288,8 @@ public class UIController : MonoBehaviour
             {
                 key.color = black;
             }
+
+            keyTextDict[key].text = "";
         }
 
         foreach (Image key in fStartingKeyboardController.listOfKeyImages)
@@ -370,7 +437,8 @@ public class UIController : MonoBehaviour
 
     public void SetChordText()
     {
-        chordName.text = chordController.masterChordNameDict[chordController.currentMasterChord].ToString() + chordController.chordTypeNameDict[chordController.currentChord.chordType].ToString(); 
+        chordName.text = chordController.masterChordNameDict[chordController.currentMasterChord].ToString() + chordController.chordTypeNameDict[chordController.currentChord.chordType].ToString();
+   
     }
 
     public void SetupChooseChordTypePanel()
