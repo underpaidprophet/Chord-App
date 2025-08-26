@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
-using System.Collections;
+
 
 public class UIController : MonoBehaviour
 {
+    public FStartingKeyboardController fStartingKeyboardController;
+
     //orange = ffbb40
+   //   purple =  c5b0cd
 
     // the piano keys
 
@@ -60,6 +63,13 @@ public class UIController : MonoBehaviour
 
     public Color white;
     public Color orange;
+    public Color purple;
+    public Color black;
+    public Color lightGreen;
+    public Color darkGreen;
+
+
+
 
     public Dictionary<MasterChord, Image> firstOctaveMasterChordDict = new Dictionary<MasterChord, Image>();
 
@@ -86,8 +96,8 @@ public class UIController : MonoBehaviour
 
     public GameObject keyboardLayout;
     public RectTransform keyboardLayoutRectTransform;
-    
 
+    public KeyboardLayout currentLayout;
 
     private void Awake()
     {
@@ -211,7 +221,20 @@ public class UIController : MonoBehaviour
 
             if (ListOfBlackKeyImages.Contains(key))
             {
-                key.sprite = blackKey;
+                key.color = black;
+            }
+        }
+
+        foreach (Image key in fStartingKeyboardController.listOfKeyImages)
+        {
+            if (fStartingKeyboardController.listOfWhiteKeyImages.Contains(key))
+            {
+                key.color = white;
+            }
+
+            if (fStartingKeyboardController.listOfBlackKeyImages.Contains(key))
+            {
+                key.color = black;
             }
         }
 
@@ -220,17 +243,43 @@ public class UIController : MonoBehaviour
 
     public void SetKeyColour(Image key)
     {
-       
-        if (ListOfWhiteKeyImages.Contains(key))
+
+        List<Image> whiteKeys = new List<Image>();
+        List<Image> blackKeys = new List<Image>();
+
+        switch (currentLayout)
         {
-            key.color = orange;
+            case KeyboardLayout.regular:
+                whiteKeys = ListOfWhiteKeyImages;
+                blackKeys = ListOfBlackKeyImages;
+                break;
+            case KeyboardLayout.extra5Keys:
+                whiteKeys = ListOfWhiteKeyImages;
+                blackKeys = ListOfBlackKeyImages;
+                break;
+            case KeyboardLayout.fStartingKEyboard:
+                whiteKeys = fStartingKeyboardController.listOfWhiteKeyImages;
+                blackKeys = fStartingKeyboardController.listOfBlackKeyImages;
+                break;
+            default:
+                break;
+        }
+
+
+
+      //  if (ListOfWhiteKeyImages.Contains(key))
+        if (whiteKeys.Contains(key))
+        {
+           // key.color = orange;
+            key.color = purple;
           
         }
 
-        if (ListOfBlackKeyImages.Contains(key))
+      //  if (ListOfBlackKeyImages.Contains(key))
+        if (blackKeys.Contains(key))
         {
-            key.sprite = orangeKey;
-           
+            key.color = purple;
+
         }
 
         isOn = true;
@@ -245,18 +294,44 @@ public class UIController : MonoBehaviour
 
         SetKeyboardLayoutSize(masterChord, chord);
 
-        Image root = firstOctaveMasterChordDict[masterChord];
+        List<Image> keyImageList = new List<Image>();
+        Dictionary<MasterChord, Image> firstOctaveChordDict = new Dictionary<MasterChord, Image>();
 
-        int offset = ListOfKeyImages.IndexOf(root);
+        switch (currentLayout)
+        {
+            case KeyboardLayout.regular:
+                keyImageList = ListOfKeyImages;
+                firstOctaveChordDict = firstOctaveMasterChordDict;
+                break;
 
-       // Debug.Log("offset " + offset);
+            case KeyboardLayout.extra5Keys:
+                keyImageList = ListOfKeyImages;
+                firstOctaveChordDict = firstOctaveMasterChordDict;
+                break;
+
+            case KeyboardLayout.fStartingKEyboard:
+                keyImageList = fStartingKeyboardController.listOfKeyImages;
+                firstOctaveChordDict = fStartingKeyboardController.firstOctaveMasterChordDict;
+                break;
+        
+        }
+
+
+      //  Image root = firstOctaveMasterChordDict[masterChord];
+        Image root = firstOctaveChordDict[masterChord];
+
+        //int offset = ListOfKeyImages.IndexOf(root);
+        int offset = keyImageList.IndexOf(root);
+
+
 
         List<int> notes = chordController.CalculateNotes(masterChord, chord);
 
         for (int i = 0; i < notes.Count; i++)
         {
             
-            SetKeyColour(ListOfKeyImages[notes[i] + offset]);
+           // SetKeyColour(ListOfKeyImages[notes[i] + offset]);
+            SetKeyColour(keyImageList[notes[i] + offset]);
         }
     }
 
@@ -319,8 +394,8 @@ public class UIController : MonoBehaviour
 
         }
 
-        //for fixing it
-        HighlightErrorOnes();
+        //for fixing it (it works now)
+       // HighlightErrorOnes();
     }
 
     public void ClearButtons(Transform parent)
@@ -371,7 +446,7 @@ public class UIController : MonoBehaviour
                 chordTypeButtonScript.button.image.color = Color.red;
 
                 //for now
-                chordTypeButtonScript.button.interactable = false;
+              //  chordTypeButtonScript.button.interactable = false;
 
             }
             else if ((notes[notes.Count - 1] + offset) >= 24 )
@@ -399,8 +474,12 @@ public class UIController : MonoBehaviour
         List<int> notes = chordController.CalculateNotes(masterChord, chord);
 
 
+        if ((notes[notes.Count - 1] + offset) >= 29)
+        {
+            SetupFKeyboardLayout();
 
-        if ((notes[notes.Count - 1] + offset) >= 24)
+        }
+        else if ((notes[notes.Count - 1] + offset) >= 24)
         {
             SetupExtra5KeyboardLayout();
 
@@ -413,7 +492,11 @@ public class UIController : MonoBehaviour
 
     public void SetupRegularKeyboardLayout()
     {
-       
+        currentLayout = KeyboardLayout.regular;
+
+        fStartingKeyboardController.FKeyboardLayoutRectTransform.transform.gameObject.SetActive(false);
+        keyboardLayout.SetActive(true);
+
         keyboardLayout.GetComponent<RectTransform>().localScale = regularKeybaordSize;
     //    keyboardLayout.transform.position = regularKeybaordLocation;
         foreach (Image image in ListOfExtra5KeyImages)
@@ -423,9 +506,10 @@ public class UIController : MonoBehaviour
     }
     public void SetupExtra5KeyboardLayout()
     {
-      
-        
-   
+        currentLayout = KeyboardLayout.extra5Keys;
+
+        fStartingKeyboardController.FKeyboardLayoutRectTransform.transform.gameObject.SetActive(false);
+        keyboardLayout.SetActive(true);
 
         keyboardLayoutRectTransform.localScale = extra5KeybaordSize;
         keyboardLayoutRectTransform.anchoredPosition = extra5KeybaordLocation;
@@ -436,11 +520,32 @@ public class UIController : MonoBehaviour
         
     }
 
-    public void QuitButton()
+
+    public void SetupFKeyboardLayout()
+    {
+
+        currentLayout = KeyboardLayout.fStartingKEyboard;
+        fStartingKeyboardController.FKeyboardLayoutRectTransform.transform.gameObject.SetActive(true);
+        keyboardLayout.SetActive(false);
+
+
+
+    }
+
+
+public void QuitButton()
     {
         Application.Quit();
     }
 
+    
    
+}
+
+public enum KeyboardLayout
+{
+    regular,
+    extra5Keys,
+    fStartingKEyboard
 }
 
