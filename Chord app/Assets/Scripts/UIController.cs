@@ -98,7 +98,7 @@ public class UIController : MonoBehaviour
     public Color lightGreen;
     public Color darkGreen;
 
-
+    public Color chosenKeyColor;
 
 
     public Dictionary<MasterChord, Image> firstOctaveMasterChordDict = new Dictionary<MasterChord, Image>();
@@ -290,6 +290,7 @@ public class UIController : MonoBehaviour
             }
 
             keyTextDict[key].text = "";
+            
         }
 
         foreach (Image key in fStartingKeyboardController.listOfKeyImages)
@@ -303,6 +304,7 @@ public class UIController : MonoBehaviour
             {
                 key.color = black;
             }
+            fStartingKeyboardController.keyTextDict[key].text = "";
         }
 
         isOn = false;
@@ -338,14 +340,14 @@ public class UIController : MonoBehaviour
         if (whiteKeys.Contains(key))
         {
            // key.color = orange;
-            key.color = purple;
+            key.color = chosenKeyColor;
           
         }
 
       //  if (ListOfBlackKeyImages.Contains(key))
         if (blackKeys.Contains(key))
         {
-            key.color = purple;
+            key.color = chosenKeyColor;
 
         }
 
@@ -354,7 +356,7 @@ public class UIController : MonoBehaviour
 
     }
 
-    //this is the function that sets the keys - just all of htem for now
+    //this is the function that sets the keys 
     public void ShowChordKeys(MasterChord masterChord, Chord chord)
     {
         ResetKeyColor();
@@ -363,22 +365,26 @@ public class UIController : MonoBehaviour
 
         List<Image> keyImageList = new List<Image>();
         Dictionary<MasterChord, Image> firstOctaveChordDict = new Dictionary<MasterChord, Image>();
+        Dictionary<Image, TextMeshProUGUI> keyTextDictToUse = new Dictionary<Image, TextMeshProUGUI>(); 
 
         switch (currentLayout)
         {
             case KeyboardLayout.regular:
                 keyImageList = ListOfKeyImages;
                 firstOctaveChordDict = firstOctaveMasterChordDict;
+                keyTextDictToUse = keyTextDict;
                 break;
 
             case KeyboardLayout.extra5Keys:
                 keyImageList = ListOfKeyImages;
                 firstOctaveChordDict = firstOctaveMasterChordDict;
+                keyTextDictToUse = keyTextDict;
                 break;
 
             case KeyboardLayout.fStartingKEyboard:
                 keyImageList = fStartingKeyboardController.listOfKeyImages;
                 firstOctaveChordDict = fStartingKeyboardController.firstOctaveMasterChordDict;
+                keyTextDictToUse = fStartingKeyboardController.keyTextDict;
                 break;
         
         }
@@ -394,11 +400,22 @@ public class UIController : MonoBehaviour
 
         List<int> notes = chordController.CalculateNotes(masterChord, chord);
 
+
+     
+        List<Intervals> intervals = chordController.currentChord.intervalsList;
+
+
+
         for (int i = 0; i < notes.Count; i++)
         {
             
-           // SetKeyColour(ListOfKeyImages[notes[i] + offset]);
+         
             SetKeyColour(keyImageList[notes[i] + offset]);
+
+            //set the note text
+           // keyTextDict[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
+            keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
+
         }
     }
 
@@ -506,8 +523,8 @@ public class UIController : MonoBehaviour
 
 
             List<int> notes = chordController.CalculateNotes(chordController.currentMasterChord, chordController.chordTypeDict[chordTypeButtonScript.thisChordType]);
-
-         
+           
+           
             
             if ((notes[notes.Count-1] + offset) >= 29)
             {

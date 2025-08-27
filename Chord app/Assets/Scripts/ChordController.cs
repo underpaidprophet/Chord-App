@@ -48,7 +48,8 @@ public class ChordController : MonoBehaviour
 
     public Dictionary<MasterChord, string> masterChordNameDict = new Dictionary<MasterChord, string>();
     public Dictionary<ChordType, string> chordTypeNameDict = new Dictionary<ChordType, string>();
-    
+
+    public Dictionary<Intervals, string> intervalNamesDict = new Dictionary<Intervals, string>();
 
 
     private void Awake()
@@ -164,6 +165,36 @@ public class ChordController : MonoBehaviour
         chordTypeDict.Add(ChordType.MinorSeventhFlatFifth, minorSeventhFlatFifth);
         chordTypeDict.Add(ChordType.Aug, aug);
         chordTypeDict.Add(ChordType.AugSeventh, augSeventh);
+
+        intervalNamesDict.Add(Intervals.Root, "R");
+        intervalNamesDict.Add(Intervals.MinorSecond, "m2");
+        intervalNamesDict.Add(Intervals.MajorSecond, "M2");
+        intervalNamesDict.Add(Intervals.MinorThird, "m3");
+        intervalNamesDict.Add(Intervals.MajorThird, "M3");
+        intervalNamesDict.Add(Intervals.PerfectFourth, "P4");
+        intervalNamesDict.Add(Intervals.AugmentedFourth, "aug4");
+        intervalNamesDict.Add(Intervals.DiminishedFifth, "dim5");
+        intervalNamesDict.Add(Intervals.PerfectFifth, "P5");
+        intervalNamesDict.Add(Intervals.AugmentedFifth, "aug5");
+        intervalNamesDict.Add(Intervals.MinorSixth, "m6");
+        intervalNamesDict.Add(Intervals.MajorSixth, "M6");
+        intervalNamesDict.Add(Intervals.DiminishedSeventh, "dim7");
+        intervalNamesDict.Add(Intervals.MinorSeventh, "m7");
+        intervalNamesDict.Add(Intervals.MajorSeventh, "M7");
+        intervalNamesDict.Add(Intervals.Octave, "R");
+        intervalNamesDict.Add(Intervals.MinorNinth, "m9");
+        intervalNamesDict.Add(Intervals.MajorNinth, "M9");
+        intervalNamesDict.Add(Intervals.MinorTenth, "m10");
+        intervalNamesDict.Add(Intervals.MajorTenth, "M10");
+        intervalNamesDict.Add(Intervals.PerfectEleventh, "P11");
+        intervalNamesDict.Add(Intervals.AugmentedEleventh, "aug11");
+        intervalNamesDict.Add(Intervals.DiminishedTwelfth, "dim12");
+        intervalNamesDict.Add(Intervals.PerfectTwelfth, "P12");
+        intervalNamesDict.Add(Intervals.MinorThirteenth, "m13");
+        intervalNamesDict.Add(Intervals.MajorThirteenth, "M13");
+        intervalNamesDict.Add(Intervals.MinorFourteenth, "m14");
+        intervalNamesDict.Add(Intervals.MajorFourteenth, "M14");
+        intervalNamesDict.Add(Intervals.Fifteenth, "P15");
     }
 
     public void Start()
