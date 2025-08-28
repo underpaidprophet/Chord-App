@@ -9,6 +9,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     public FStartingKeyboardController fStartingKeyboardController;
+    public InversionController inversionController;
 
     //orange = ffbb40
    //   purple =  c5b0cd
@@ -123,14 +124,25 @@ public class UIController : MonoBehaviour
     public GameObject chordTypeButtonPrefab;
 
     public TextMeshProUGUI chordName;
+    public TextMeshProUGUI chordInversionText;
 
     public GameObject keyboardLayout;
     public RectTransform keyboardLayoutRectTransform;
 
     public KeyboardLayout currentLayout;
-
+    
 
     public Dictionary<Image, TextMeshProUGUI> keyTextDict = new Dictionary<Image, TextMeshProUGUI>();
+    public Dictionary<Inversions, string> inversionsNameDict = new Dictionary<Inversions, string>();
+
+
+
+    public List<GameObject> inversionButtons = new List<GameObject>();
+    public GameObject rootPositionInversionButton;
+    public GameObject firstInversionButton;
+    public GameObject secondInversionButton;
+    public GameObject thirdInversionButton;
+
 
 
     private void Awake()
@@ -265,8 +277,11 @@ public class UIController : MonoBehaviour
 
     ResetKeyColor();
 
-
-
+        inversionsNameDict.Add(Inversions.RootPosition, "Root position");
+        inversionsNameDict.Add(Inversions.FirstInversion, "First Inversion");
+        inversionsNameDict.Add(Inversions.SecondInversion, "Second Inversion");
+        inversionsNameDict.Add(Inversions.ThirdInversion, "Third Inversion");
+       
     }
 
     private void Start()
@@ -363,6 +378,7 @@ public class UIController : MonoBehaviour
 
         SetKeyboardLayoutSize(masterChord, chord);
 
+
         List<Image> keyImageList = new List<Image>();
         Dictionary<MasterChord, Image> firstOctaveChordDict = new Dictionary<MasterChord, Image>();
         Dictionary<Image, TextMeshProUGUI> keyTextDictToUse = new Dictionary<Image, TextMeshProUGUI>(); 
@@ -389,11 +405,11 @@ public class UIController : MonoBehaviour
         
         }
 
-
-      //  Image root = firstOctaveMasterChordDict[masterChord];
+        
+   
         Image root = firstOctaveChordDict[masterChord];
 
-        //int offset = ListOfKeyImages.IndexOf(root);
+       
         int offset = keyImageList.IndexOf(root);
 
 
@@ -404,6 +420,24 @@ public class UIController : MonoBehaviour
      
         List<Intervals> intervals = chordController.currentChord.intervalsList;
 
+        switch (chordController.currentInversion)
+        {
+            case Inversions.RootPosition:
+                notes = inversionController.RootPoositionSemitones(notes);
+                break;
+            case Inversions.FirstInversion:
+                notes = inversionController.FirstInversionSemitones(notes);
+                break;
+            case Inversions.SecondInversion:
+                notes = inversionController.SecondInversionSemitones(notes);
+                break;
+            case Inversions.ThirdInversion:
+                notes = inversionController.ThirdInversionSemitones(notes);
+
+                break;
+            
+        }
+
 
 
         for (int i = 0; i < notes.Count; i++)
@@ -413,7 +447,7 @@ public class UIController : MonoBehaviour
             SetKeyColour(keyImageList[notes[i] + offset]);
 
             //set the note text
-           // keyTextDict[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
+          
             keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
 
         }
@@ -422,7 +456,10 @@ public class UIController : MonoBehaviour
 
     public void ShowChordButton()
     {
-      
+        chordController.currentInversion = Inversions.RootPosition;
+        SetChordInversionText();
+
+        inversionController.SetInversionButtons();
 
         ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
         SetChordText();
@@ -456,6 +493,12 @@ public class UIController : MonoBehaviour
     {
         chordName.text = chordController.masterChordNameDict[chordController.currentMasterChord].ToString() + chordController.chordTypeNameDict[chordController.currentChord.chordType].ToString();
    
+    }
+
+    public void SetChordInversionText()
+    {
+        chordInversionText.text = inversionsNameDict[chordController.currentInversion];
+
     }
 
     public void SetupChooseChordTypePanel()
