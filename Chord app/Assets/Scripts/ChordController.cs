@@ -38,8 +38,28 @@ public class ChordController : MonoBehaviour
     public Chord aug;
     public Chord augSeventh;
 
+
+    public Scale C;
+    public Scale CSharp;
+    public Scale DFlat;
+    public Scale D;
+    public Scale DSharp;
+    public Scale EFlat;
+    public Scale E;
+    public Scale F;
+    public Scale FSharp;
+    public Scale GFlat;
+    public Scale G;
+    public Scale GSharp;
+    public Scale AFlat;
+    public Scale A;
+    public Scale ASharp;
+    public Scale BFlat;
+    public Scale B;
+
     public MasterChord currentMasterChord;
     public Chord currentChord;
+    
 
     public List<int> chordIntervals = new List<int>();
 
@@ -52,6 +72,10 @@ public class ChordController : MonoBehaviour
     public Dictionary<Intervals, string> intervalNamesDict = new Dictionary<Intervals, string>();
 
     public Inversions currentInversion = Inversions.RootPosition;
+
+    public List<Notes> currentChordNotesList = new List<Notes>();
+
+    public Dictionary<MasterChord, Scale> scaleDict = new Dictionary<MasterChord, Scale>();
 
     private void Awake()
     {
@@ -196,7 +220,26 @@ public class ChordController : MonoBehaviour
         intervalNamesDict.Add(Intervals.MinorFourteenth, "b14");
         intervalNamesDict.Add(Intervals.MajorFourteenth, "14");
         intervalNamesDict.Add(Intervals.Fifteenth, "15");
-    }
+
+        scaleDict.Add(MasterChord.C, C);
+    scaleDict.Add(MasterChord.CSharp, CSharp);
+        scaleDict.Add(MasterChord.DFlat, DFlat);
+    scaleDict.Add(MasterChord.D, D);
+        scaleDict.Add(MasterChord.DSharp, DSharp);
+    scaleDict.Add(MasterChord.EFlat, EFlat);
+        scaleDict.Add(MasterChord.E,E);
+        scaleDict.Add(MasterChord.F,F);
+        scaleDict.Add(MasterChord.FSharp, FSharp);
+        scaleDict.Add(MasterChord.GFlat, GFlat);
+        scaleDict.Add(MasterChord.G,G);
+        scaleDict.Add(MasterChord.GSharp, GSharp);
+        scaleDict.Add(MasterChord.AFlat, AFlat);
+        scaleDict.Add(MasterChord.A, A);
+        scaleDict.Add(MasterChord.ASharp, ASharp);
+
+        scaleDict.Add(MasterChord.BFlat, BFlat);
+        scaleDict.Add(MasterChord.B, B);
+}
 
     public void Start()
     {
@@ -210,7 +253,7 @@ public class ChordController : MonoBehaviour
     public void GetNotesButton()
     {
         chordIntervals.Clear();
-        chordIntervals = CalculateNotes(currentMasterChord, currentChord);
+        chordIntervals = CalculatIntervalss(currentMasterChord, currentChord);
 
         //testing
        // Debug.Log(currentChord);
@@ -220,7 +263,7 @@ public class ChordController : MonoBehaviour
         }
     }
 
-    public List<int> CalculateNotes(MasterChord masterChord, Chord chord)
+    public List<int> CalculatIntervalss(MasterChord masterChord, Chord chord)
     {
      
         List<int> list = new List<int>();
@@ -230,6 +273,19 @@ public class ChordController : MonoBehaviour
         {
             list.Add(intervalsSemitonesDictionary[interval]);
         }
+
+        return list;
+    }
+
+    public List<Notes> SetChordNotes(Chord chord)
+    {
+        List<Notes> list = new List<Notes>();
+
+        Scale scale = scaleDict[currentMasterChord];
+
+    
+
+
 
         return list;
     }
@@ -333,6 +389,45 @@ public enum Inversions
     FirstInversion,
     SecondInversion,
     ThirdInversion
+}
+
+public enum Notes
+{
+    C,
+    CSharp,
+    DFlat,
+    D,
+    DSharp,
+    EFlat,
+    E,
+    ESharp,
+    FFlat,
+    F,
+    FSharp,
+    GFlat,
+    G,
+    GSharp,
+    AFlat,
+    A,
+    ASharp,
+    BFlat,
+    B,
+    BSharp,
+    CFlat,
+    CDoubleSharp,
+    DDoubleSharp,
+    EDoubleSharp,
+    FDoubleSharp,
+    GDoubleSharp,
+    ADoubleSharp,
+    BDoubleSharp,
+    CDoubleFlat,
+    DDoubleFlat,
+    EDoubleFlat,
+    FDoubleFlat,
+    GDoubleFlat,
+    ADoubleFlat,
+    BDoubleFlat
 }
 
 

@@ -409,24 +409,41 @@ public class UIController : MonoBehaviour
    
         Image root = firstOctaveChordDict[masterChord];
 
-       
+        switch (chordController.currentInversion)
+        {
+            case Inversions.RootPosition:
+                //leave it
+                break;
+            case Inversions.FirstInversion:
+
+                break;
+            case Inversions.SecondInversion:
+                break;
+            case Inversions.ThirdInversion:
+                break;
+            default:
+                break;
+        }
+
         int offset = keyImageList.IndexOf(root);
 
 
 
-        List<int> notes = chordController.CalculateNotes(masterChord, chord);
+        List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
 
 
      
         List<Intervals> intervals = chordController.currentChord.intervalsList;
-
+        
         switch (chordController.currentInversion)
         {
             case Inversions.RootPosition:
                 notes = inversionController.RootPoositionSemitones(notes);
                 break;
             case Inversions.FirstInversion:
+               
                 notes = inversionController.FirstInversionSemitones(notes);
+            
                 break;
             case Inversions.SecondInversion:
                 notes = inversionController.SecondInversionSemitones(notes);
@@ -451,6 +468,7 @@ public class UIController : MonoBehaviour
             keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
 
         }
+       
     }
 
 
@@ -565,7 +583,7 @@ public class UIController : MonoBehaviour
 
 
 
-            List<int> notes = chordController.CalculateNotes(chordController.currentMasterChord, chordController.chordTypeDict[chordTypeButtonScript.thisChordType]);
+            List<int> notes = chordController.CalculatIntervalss(chordController.currentMasterChord, chordController.chordTypeDict[chordTypeButtonScript.thisChordType]);
            
            
             
@@ -599,7 +617,7 @@ public class UIController : MonoBehaviour
 
 
 
-        List<int> notes = chordController.CalculateNotes(masterChord, chord);
+        List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
 
 
         if ((notes[notes.Count - 1] + offset) >= 29)

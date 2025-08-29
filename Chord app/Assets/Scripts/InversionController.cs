@@ -114,4 +114,36 @@ public class InversionController : MonoBehaviour
 
 
     }
+    /*
+    public List<int> NewInversionNotesList(List<int> notes, Inversions inversion)
+    {
+        List<int> returnList = new List<int>();
+
+        foreach (var note in notes)
+        {
+            returnList.Add(note);
+        }
+
+        switch (inversion)
+        {
+            case Inversions.RootPosition:
+                //leave it
+                break;
+            case Inversions.FirstInversion:
+                int note = returnList[0];
+                returnList.RemoveAt(0);
+                returnList.Insert(2, note);
+                break;
+            case Inversions.SecondInversion:
+                break;
+            case Inversions.ThirdInversion:
+                break;
+            default:
+                break;
+        }
+
+       
+        return returnList;
+    }
+    */
 }

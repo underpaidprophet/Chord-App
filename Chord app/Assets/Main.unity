@@ -237,8 +237,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -113}
-  m_SizeDelta: {x: 0, y: 190.92725}
+  m_AnchoredPosition: {x: 0, y: -104.23}
+  m_SizeDelta: {x: 0, y: 208.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &42068878
 MonoBehaviour:
@@ -5043,10 +5043,28 @@ MonoBehaviour:
   minorSeventhFlatFifth: {fileID: 11400000, guid: eb09610364e884f4d88de4976f5d8234, type: 2}
   aug: {fileID: 11400000, guid: e6e37e891afa3794bb13847ba0f5e4e3, type: 2}
   augSeventh: {fileID: 11400000, guid: 2163c87c47792fe46a4a35c5c7de5161, type: 2}
+  C: {fileID: 11400000, guid: 82902ee945082b748994096994271891, type: 2}
+  CSharp: {fileID: 11400000, guid: fea2c72b08835d0488b6ac99fe0f8072, type: 2}
+  DFlat: {fileID: 11400000, guid: d7793047aa9f6d24c9e84c5e11810bf2, type: 2}
+  D: {fileID: 11400000, guid: 86aed45ebf7b8234c99579c3b0e5be1f, type: 2}
+  DSharp: {fileID: 11400000, guid: abaa88afa73ae764dbe00eae86eee871, type: 2}
+  EFlat: {fileID: 11400000, guid: bcef4dc51358d0e4fabd30093a808786, type: 2}
+  E: {fileID: 11400000, guid: 913acfe1ebcf6c843b5c03fc31572b6c, type: 2}
+  F: {fileID: 11400000, guid: d9bca3d66c2b4bd4aa0cc3f1c37a8754, type: 2}
+  FSharp: {fileID: 11400000, guid: dee010deb585b7740b9db7080ff4b422, type: 2}
+  GFlat: {fileID: 11400000, guid: 018b42eb8befe72458247b95061689ce, type: 2}
+  G: {fileID: 11400000, guid: 7740ae3ffbb942a4fa7866835835cb00, type: 2}
+  GSharp: {fileID: 11400000, guid: a55d612f46aa4e84fb01f0e576fe275c, type: 2}
+  AFlat: {fileID: 11400000, guid: 71d5260163289f14f95570ccf7ce03c5, type: 2}
+  A: {fileID: 11400000, guid: bd93bce4ff6105f44a6f472bdc8c052f, type: 2}
+  ASharp: {fileID: 11400000, guid: fb48f0035e3d41d469d29b483b6e0137, type: 2}
+  BFlat: {fileID: 11400000, guid: 11fc7611a73b52f4892e108878375225, type: 2}
+  B: {fileID: 11400000, guid: ce02bca9c39371c47a76a3d6b9bb7183, type: 2}
   currentMasterChord: 0
   currentChord: {fileID: 0}
   chordIntervals: 
   currentInversion: 0
+  currentChordNotesList: 
 --- !u!4 &560057950
 Transform:
   m_ObjectHideFlags: 0
@@ -13238,8 +13256,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -113}
-  m_SizeDelta: {x: 0, y: 190.92725}
+  m_AnchoredPosition: {x: 0, y: -104.23}
+  m_SizeDelta: {x: 0, y: 208.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1443127703
 MonoBehaviour:
