@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChordController : MonoBehaviour
 {
+
+    public UIController uIController;
     Dictionary<Intervals, int> intervalsSemitonesDictionary = new Dictionary<Intervals, int>();
 
     public Chord major;
@@ -76,6 +78,10 @@ public class ChordController : MonoBehaviour
     public List<Notes> currentChordNotesList = new List<Notes>();
 
     public Dictionary<MasterChord, Scale> scaleDict = new Dictionary<MasterChord, Scale>();
+    public Dictionary<Intervals, int> intervalIntDict = new Dictionary<Intervals, int>();
+
+
+    public Dictionary<Intervals, Adjustment> adjustmentDict = new Dictionary<Intervals, Adjustment>();
 
     private void Awake()
     {
@@ -239,7 +245,68 @@ public class ChordController : MonoBehaviour
 
         scaleDict.Add(MasterChord.BFlat, BFlat);
         scaleDict.Add(MasterChord.B, B);
-}
+
+        intervalIntDict.Add(Intervals.Root, 0);
+        intervalIntDict.Add(Intervals.MinorSecond, 2);
+        intervalIntDict.Add(Intervals.MajorSecond, 2);
+        intervalIntDict.Add(Intervals.MinorThird, 3);
+        intervalIntDict.Add(Intervals.MajorThird, 3);
+        intervalIntDict.Add(Intervals.PerfectFourth, 4);
+        intervalIntDict.Add(Intervals.AugmentedFourth, 4);
+        intervalIntDict.Add(Intervals.DiminishedFifth, 5);
+        intervalIntDict.Add(Intervals.PerfectFifth, 5);
+        intervalIntDict.Add(Intervals.AugmentedFifth, 5);
+        intervalIntDict.Add(Intervals.MinorSixth, 6);
+        intervalIntDict.Add(Intervals.MajorSixth, 6);
+        intervalIntDict.Add(Intervals.DiminishedSeventh, 7);
+        intervalIntDict.Add(Intervals.MinorSeventh, 7);
+        intervalIntDict.Add(Intervals.MajorSeventh, 7);
+        intervalIntDict.Add(Intervals.Octave, 8);
+        intervalIntDict.Add(Intervals.MinorNinth, 9);
+        intervalIntDict.Add(Intervals.MajorNinth, 9);
+        intervalIntDict.Add(Intervals.MinorTenth, 10);
+        intervalIntDict.Add(Intervals.MajorTenth, 10);
+        intervalIntDict.Add(Intervals.PerfectEleventh, 11);
+        intervalIntDict.Add(Intervals.AugmentedEleventh, 11);
+        intervalIntDict.Add(Intervals.DiminishedTwelfth, 12);
+        intervalIntDict.Add(Intervals.PerfectTwelfth, 12);
+        intervalIntDict.Add(Intervals.MinorThirteenth, 13);
+        intervalIntDict.Add(Intervals.MajorThirteenth, 13);
+        intervalIntDict.Add(Intervals.MinorFourteenth, 14);
+        intervalIntDict.Add(Intervals.MajorFourteenth, 14);
+        intervalIntDict.Add(Intervals.Fifteenth, 15);
+
+
+        adjustmentDict.Add(Intervals.Root, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorSecond, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorSecond, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorThird, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorThird, Adjustment.None);
+        adjustmentDict.Add(Intervals.PerfectFourth, Adjustment.None);
+        adjustmentDict.Add(Intervals.AugmentedFourth, Adjustment.UpOne);
+        adjustmentDict.Add(Intervals.DiminishedFifth,Adjustment.DownTwo);
+        adjustmentDict.Add(Intervals.PerfectFifth, Adjustment.None);
+        adjustmentDict.Add(Intervals.AugmentedFifth, Adjustment.UpOne);
+        adjustmentDict.Add(Intervals.MinorSixth, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorSixth, Adjustment.None);
+        adjustmentDict.Add(Intervals.DiminishedSeventh, Adjustment.DownTwo);
+        adjustmentDict.Add(Intervals.MinorSeventh, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorSeventh, Adjustment.None);
+        adjustmentDict.Add(Intervals.Octave, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorNinth, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorNinth, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorTenth, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorTenth, Adjustment.None);
+        adjustmentDict.Add(Intervals.PerfectEleventh, Adjustment.None);
+        adjustmentDict.Add(Intervals.AugmentedEleventh, Adjustment.UpOne);
+        adjustmentDict.Add(Intervals.DiminishedTwelfth, Adjustment.DownTwo);
+        adjustmentDict.Add(Intervals.PerfectTwelfth, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorThirteenth, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorThirteenth, Adjustment.None);
+        adjustmentDict.Add(Intervals.MinorFourteenth, Adjustment.DownOne);
+        adjustmentDict.Add(Intervals.MajorFourteenth, Adjustment.None);
+        adjustmentDict.Add(Intervals.Fifteenth, Adjustment.None);
+    }
 
     public void Start()
     {
@@ -277,15 +344,37 @@ public class ChordController : MonoBehaviour
         return list;
     }
 
-    public List<Notes> SetChordNotes(Chord chord)
+    public List<Notes> SetChordNotes(Chord chord, MasterChord masterChord, int offset)
     {
         List<Notes> list = new List<Notes>();
+       
+        Scale scale = scaleDict[masterChord];
 
-        Scale scale = scaleDict[currentMasterChord];
+        foreach (Intervals interval in chord.intervalsList)
+        {
+            if (interval == Intervals.Root)
+            {
+                list.Add(scale.notesInScale[intervalIntDict[interval]]);
+            }
+            if (interval != Intervals.Root)
+            {
+                list.Add(scale.notesInScale[intervalIntDict[interval]-1]);
+            }
+        }
 
-    
 
 
+        return list;
+    }
+
+    public List<Notes> AdjustNotes(List<Notes> notes, Chord chord)
+    {
+        List<Notes> list = new List<Notes>(notes);
+
+        foreach (Intervals interval in chord.intervalsList)
+        {
+           // if(adjustmentDict[note].)
+        }
 
         return list;
     }
@@ -430,6 +519,13 @@ public enum Notes
     BDoubleFlat
 }
 
-
+public enum Adjustment
+{
+    DownTwo,
+    DownOne,
+    None,
+    UpOne,
+    UpTwo
+}
 
 

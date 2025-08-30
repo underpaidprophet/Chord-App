@@ -281,6 +281,8 @@ public class UIController : MonoBehaviour
         inversionsNameDict.Add(Inversions.FirstInversion, "First Inversion");
         inversionsNameDict.Add(Inversions.SecondInversion, "Second Inversion");
         inversionsNameDict.Add(Inversions.ThirdInversion, "Third Inversion");
+
+
        
     }
 
@@ -468,7 +470,15 @@ public class UIController : MonoBehaviour
             keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
 
         }
-       
+
+
+
+        List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord, offset);
+        foreach (Notes note in notesInChord)
+        {
+            Debug.Log(note.ToString());
+        }
+
     }
 
 
@@ -504,7 +514,7 @@ public class UIController : MonoBehaviour
             
         }
 
-      
+     
     }
 
     public void SetChordText()
