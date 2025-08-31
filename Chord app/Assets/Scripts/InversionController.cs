@@ -83,67 +83,100 @@ public class InversionController : MonoBehaviour
     
     public void SetInversionButtons()
     {
-        foreach (GameObject button in uIController.inversionButtons)
+
+        
+        foreach (Transform child in uIController.inversionButtonParent.transform)
         {
-            button.SetActive(false);
+            Destroy(child.gameObject);
         }
+
+        GameObject buttonGO = new GameObject();
+        InversionButtonPrefabScrpt script;
 
         switch (chordController.currentChord.intervalsList.Count)
         {
+           
 
                 case 3:
-                uIController.rootPositionInversionButton.SetActive(true);
-                uIController.firstInversionButton.SetActive(true);
-                uIController.secondInversionButton.SetActive(true);
+                for (int i = 0; i < 3; i++)
+                {
+                     buttonGO = Instantiate(uIController.inversionButtonPrefab, uIController.inversionButtonParent.transform);
+
+
+                    script = buttonGO.GetComponent<InversionButtonPrefabScrpt>();
+
+                    script.thisInversion = (Inversions)i;
+
+                    script.chordController = chordController;
+                    script.uIController = uIController;
+                    //    script.buttonText.text = chordController.masterChordNameDict[masterChord];
+
+                    script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordController.currentChord.chordType];
+                    script.inversionName.text = uIController.inversionsNameDict[script.thisInversion];
+
+                    if (i > 0)
+                    {
+                        script.buttonText.text = script.buttonText.text + "/" + chordController.noteNameDict[chordController.notesInCurrentChord[i]];
+                    }
+
+                    script.button.onClick.AddListener(script.ClickedOn);
+
+                }
+
                 break;
 
             case 4:
-                uIController.rootPositionInversionButton.SetActive(true);
-                uIController.firstInversionButton.SetActive(true);
-                uIController.secondInversionButton.SetActive(true);
-                uIController.thirdInversionButton.SetActive(true);
+                for (int i = 0; i < 4; i++)
+                {
+                     buttonGO = Instantiate(uIController.inversionButtonPrefab, uIController.inversionButtonParent.transform);
+
+
+                     script = buttonGO.GetComponent<InversionButtonPrefabScrpt>();
+
+                    script.thisInversion = (Inversions)i;
+
+                    script.chordController = chordController;
+                    script.uIController = uIController;
+                    //    script.buttonText.text = chordController.masterChordNameDict[masterChord];
+                    script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordController.currentChord.chordType];
+                    script.inversionName.text = uIController.inversionsNameDict[script.thisInversion];
+
+                    if (i > 0)
+                    {
+                        script.buttonText.text = script.buttonText.text + "/" + chordController.noteNameDict[chordController.notesInCurrentChord[i]];
+                    }
+
+
+                    script.button.onClick.AddListener(script.ClickedOn);
+
+                }
                 break;
 
             default:
-                uIController.rootPositionInversionButton.SetActive(true);
+                 buttonGO = Instantiate(uIController.inversionButtonPrefab, uIController.inversionButtonParent.transform);
+
+
+                 script = buttonGO.GetComponent<InversionButtonPrefabScrpt>();
+
+                script.thisInversion = (Inversions)0;
+
+                script.chordController = chordController;
+                script.uIController = uIController;
+            
+                script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordController.currentChord.chordType];
+
+
+                script.button.onClick.AddListener(script.ClickedOn);
                 break;
 
         }
-
-
-
+        
 
     }
-    /*
-    public List<int> NewInversionNotesList(List<int> notes, Inversions inversion)
-    {
-        List<int> returnList = new List<int>();
 
-        foreach (var note in notes)
-        {
-            returnList.Add(note);
-        }
+    
+    
+    
 
-        switch (inversion)
-        {
-            case Inversions.RootPosition:
-                //leave it
-                break;
-            case Inversions.FirstInversion:
-                int note = returnList[0];
-                returnList.RemoveAt(0);
-                returnList.Insert(2, note);
-                break;
-            case Inversions.SecondInversion:
-                break;
-            case Inversions.ThirdInversion:
-                break;
-            default:
-                break;
-        }
 
-       
-        return returnList;
-    }
-    */
 }

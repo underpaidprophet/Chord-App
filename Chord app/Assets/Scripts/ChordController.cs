@@ -70,7 +70,8 @@ public class ChordController : MonoBehaviour
 
     public Dictionary<MasterChord, string> masterChordNameDict = new Dictionary<MasterChord, string>();
     public Dictionary<ChordType, string> chordTypeNameDict = new Dictionary<ChordType, string>();
-
+    public Dictionary<Notes, string> noteNameDict = new Dictionary<Notes, string>();
+    
     public Dictionary<Intervals, string> intervalNamesDict = new Dictionary<Intervals, string>();
 
     public Inversions currentInversion = Inversions.RootPosition;
@@ -82,6 +83,14 @@ public class ChordController : MonoBehaviour
 
 
     public Dictionary<Intervals, Adjustment> adjustmentDict = new Dictionary<Intervals, Adjustment>();
+
+    public Dictionary<Notes, Notes> upOneDict = new Dictionary<Notes, Notes>();
+    public Dictionary<Notes, Notes> upTwoDict = new Dictionary<Notes, Notes>();
+    public Dictionary<Notes, Notes> downTwoDict = new Dictionary<Notes, Notes>();
+    public Dictionary<Notes, Notes> downOneDict = new Dictionary<Notes, Notes>();
+
+
+    public List<Notes> notesInCurrentChord = new List<Notes>();
 
     private void Awake()
     {
@@ -133,6 +142,46 @@ public class ChordController : MonoBehaviour
         masterChordNameDict.Add(MasterChord.ASharp, "A#");
         masterChordNameDict.Add(MasterChord.BFlat, "Bb");
         masterChordNameDict.Add(MasterChord.B, "B");
+
+        noteNameDict.Add(Notes.C, "C");
+        noteNameDict.Add(Notes.CFlat, "Cb");
+        noteNameDict.Add(Notes.CSharp, "C#");
+        noteNameDict.Add(Notes.DFlat, "Db");
+        noteNameDict.Add(Notes.D, "D");
+        noteNameDict.Add(Notes.DSharp, "D#");
+        noteNameDict.Add(Notes.EFlat, "Eb");
+        noteNameDict.Add(Notes.E, "E");
+        noteNameDict.Add(Notes.ESharp, "E#");
+        noteNameDict.Add(Notes.FFlat, "Fb");
+        noteNameDict.Add(Notes.F, "F");
+        noteNameDict.Add(Notes.FSharp, "F#");
+        noteNameDict.Add(Notes.GFlat, "Gb");
+        noteNameDict.Add(Notes.G, "G");
+        noteNameDict.Add(Notes.GSharp, "G#");
+        noteNameDict.Add(Notes.AFlat, "Ab");
+        noteNameDict.Add(Notes.A, "A");
+        noteNameDict.Add(Notes.ASharp, "A#");
+        noteNameDict.Add(Notes.BFlat, "Bb");
+        noteNameDict.Add(Notes.B, "B");
+        noteNameDict.Add(Notes.BSharp, "B#");
+
+
+        noteNameDict.Add(Notes.FDoubleSharp, "F##");
+        noteNameDict.Add(Notes.GDoubleSharp, "G##");
+        noteNameDict.Add(Notes.ADoubleSharp, "A##");
+        noteNameDict.Add(Notes.BDoubleSharp, "B##");
+        noteNameDict.Add(Notes.CDoubleSharp, "C##");
+        noteNameDict.Add(Notes.DDoubleSharp, "D##");
+        noteNameDict.Add(Notes.EDoubleSharp, "E##");
+
+        noteNameDict.Add(Notes.FDoubleFlat, "Fbb");
+        noteNameDict.Add(Notes.GDoubleFlat, "Gbb");
+        noteNameDict.Add(Notes.ADoubleFlat, "Abb");
+        noteNameDict.Add(Notes.BDoubleFlat, "Bbb");
+        noteNameDict.Add(Notes.CDoubleFlat, "Cbb");
+        noteNameDict.Add(Notes.DDoubleFlat, "Dbb");
+        noteNameDict.Add(Notes.EDoubleFlat, "Ebb");
+       
 
 
         chordTypeNameDict.Add(ChordType.Major, "");
@@ -204,12 +253,12 @@ public class ChordController : MonoBehaviour
         intervalNamesDict.Add(Intervals.MajorThird, "3");
         intervalNamesDict.Add(Intervals.PerfectFourth, "4");
         intervalNamesDict.Add(Intervals.AugmentedFourth, "#4");
-        intervalNamesDict.Add(Intervals.DiminishedFifth, "bb5");
+        intervalNamesDict.Add(Intervals.DiminishedFifth, "b5");
         intervalNamesDict.Add(Intervals.PerfectFifth, "5");
         intervalNamesDict.Add(Intervals.AugmentedFifth, "#5");
         intervalNamesDict.Add(Intervals.MinorSixth, "b6");
         intervalNamesDict.Add(Intervals.MajorSixth, "6");
-        intervalNamesDict.Add(Intervals.DiminishedSeventh, "bb7");
+        intervalNamesDict.Add(Intervals.DiminishedSeventh, "b7");
         intervalNamesDict.Add(Intervals.MinorSeventh, "b7");
         intervalNamesDict.Add(Intervals.MajorSeventh, "7");
         intervalNamesDict.Add(Intervals.Octave, "R");
@@ -219,7 +268,7 @@ public class ChordController : MonoBehaviour
         intervalNamesDict.Add(Intervals.MajorTenth, "10");
         intervalNamesDict.Add(Intervals.PerfectEleventh, "11");
         intervalNamesDict.Add(Intervals.AugmentedEleventh, "#11");
-        intervalNamesDict.Add(Intervals.DiminishedTwelfth, "bb12");
+        intervalNamesDict.Add(Intervals.DiminishedTwelfth, "b12");
         intervalNamesDict.Add(Intervals.PerfectTwelfth, "12");
         intervalNamesDict.Add(Intervals.MinorThirteenth, "b13");
         intervalNamesDict.Add(Intervals.MajorThirteenth, "13");
@@ -284,7 +333,7 @@ public class ChordController : MonoBehaviour
         adjustmentDict.Add(Intervals.MajorThird, Adjustment.None);
         adjustmentDict.Add(Intervals.PerfectFourth, Adjustment.None);
         adjustmentDict.Add(Intervals.AugmentedFourth, Adjustment.UpOne);
-        adjustmentDict.Add(Intervals.DiminishedFifth,Adjustment.DownTwo);
+        adjustmentDict.Add(Intervals.DiminishedFifth,Adjustment.DownOne);
         adjustmentDict.Add(Intervals.PerfectFifth, Adjustment.None);
         adjustmentDict.Add(Intervals.AugmentedFifth, Adjustment.UpOne);
         adjustmentDict.Add(Intervals.MinorSixth, Adjustment.DownOne);
@@ -306,6 +355,110 @@ public class ChordController : MonoBehaviour
         adjustmentDict.Add(Intervals.MinorFourteenth, Adjustment.DownOne);
         adjustmentDict.Add(Intervals.MajorFourteenth, Adjustment.None);
         adjustmentDict.Add(Intervals.Fifteenth, Adjustment.None);
+
+        upOneDict.Add(Notes.C, Notes.CSharp);
+        upOneDict.Add(Notes.CFlat, Notes.C);
+        upOneDict.Add(Notes.CSharp, Notes.CDoubleSharp);
+        upOneDict.Add(Notes.CDoubleFlat, Notes.CFlat);
+        upOneDict.Add(Notes.DFlat, Notes.D);
+        upOneDict.Add(Notes.D, Notes.DSharp);
+        upOneDict.Add(Notes.DSharp, Notes.DDoubleSharp);
+        upOneDict.Add(Notes.DDoubleFlat, Notes.DFlat);
+        upOneDict.Add(Notes.EFlat, Notes.E);
+        upOneDict.Add(Notes.E, Notes.ESharp);
+        upOneDict.Add(Notes.ESharp, Notes.EDoubleSharp);
+        upOneDict.Add(Notes.EDoubleFlat, Notes.EFlat);
+        upOneDict.Add(Notes.FFlat, Notes.F);
+        upOneDict.Add(Notes.F, Notes.FSharp);
+        upOneDict.Add(Notes.FSharp, Notes.FDoubleSharp);
+        upOneDict.Add(Notes.FDoubleFlat, Notes.FFlat);
+        upOneDict.Add(Notes.GFlat, Notes.G);
+        upOneDict.Add(Notes.G, Notes.GSharp);
+        upOneDict.Add(Notes.GSharp, Notes.GDoubleSharp);
+        upOneDict.Add(Notes.GDoubleFlat, Notes.GFlat);
+        upOneDict.Add(Notes.AFlat, Notes.A);
+        upOneDict.Add(Notes.A, Notes.ASharp);
+        upOneDict.Add(Notes.ASharp, Notes.ADoubleSharp);
+        upOneDict.Add(Notes.ADoubleFlat, Notes.AFlat);
+        upOneDict.Add(Notes.BFlat, Notes.B);
+        upOneDict.Add(Notes.B, Notes.BSharp);
+        upOneDict.Add(Notes.BSharp, Notes.BDoubleSharp);
+        upOneDict.Add(Notes.BDoubleFlat, Notes.BFlat);
+
+
+
+        upTwoDict.Add(Notes.C, Notes.CDoubleSharp);
+        upTwoDict.Add(Notes.CFlat, Notes.CSharp);
+        upTwoDict.Add(Notes.CDoubleFlat, Notes.C);
+        upTwoDict.Add(Notes.DFlat, Notes.DSharp);
+        upTwoDict.Add(Notes.D, Notes.DDoubleSharp);
+        upTwoDict.Add(Notes.DDoubleFlat, Notes.D);
+        upTwoDict.Add(Notes.EFlat, Notes.ESharp);
+        upTwoDict.Add(Notes.E, Notes.EDoubleSharp);
+        upTwoDict.Add(Notes.EDoubleFlat, Notes.E);
+        upTwoDict.Add(Notes.FFlat, Notes.FSharp);
+        upTwoDict.Add(Notes.F, Notes.FDoubleSharp);
+        upTwoDict.Add(Notes.FDoubleFlat, Notes.F);
+        upTwoDict.Add(Notes.GFlat, Notes.GSharp);
+        upTwoDict.Add(Notes.G, Notes.GDoubleSharp);
+        upTwoDict.Add(Notes.GDoubleFlat, Notes.G);
+        upTwoDict.Add(Notes.AFlat, Notes.ASharp);
+        upTwoDict.Add(Notes.A, Notes.ADoubleSharp);
+        upTwoDict.Add(Notes.ADoubleFlat, Notes.A);
+        upTwoDict.Add(Notes.BFlat, Notes.BSharp);
+        upTwoDict.Add(Notes.B, Notes.BDoubleSharp);
+        upTwoDict.Add(Notes.BDoubleFlat, Notes.B);
+
+        downOneDict.Add(Notes.CFlat, Notes.CDoubleFlat);
+        downOneDict.Add(Notes.C, Notes.CFlat);
+        downOneDict.Add(Notes.CSharp, Notes.C);
+        downOneDict.Add(Notes.CDoubleSharp, Notes.CSharp);
+        downOneDict.Add(Notes.DFlat, Notes.DDoubleFlat);
+        downOneDict.Add(Notes.D, Notes.DFlat);
+        downOneDict.Add(Notes.DSharp, Notes.D);
+        downOneDict.Add(Notes.DDoubleSharp, Notes.DSharp);
+        downOneDict.Add(Notes.EFlat, Notes.EDoubleFlat);
+        downOneDict.Add(Notes.E, Notes.EFlat);
+        downOneDict.Add(Notes.ESharp, Notes.E);
+        downOneDict.Add(Notes.EDoubleSharp, Notes.ESharp);
+        downOneDict.Add(Notes.FFlat, Notes.FDoubleFlat);
+        downOneDict.Add(Notes.F, Notes.FFlat);
+        downOneDict.Add(Notes.FSharp, Notes.F);
+        downOneDict.Add(Notes.FDoubleSharp, Notes.FSharp);
+        downOneDict.Add(Notes.GFlat, Notes.GDoubleFlat);
+        downOneDict.Add(Notes.G, Notes.GFlat);
+        downOneDict.Add(Notes.GSharp, Notes.G);
+        downOneDict.Add(Notes.GDoubleSharp, Notes.GSharp);
+        downOneDict.Add(Notes.AFlat, Notes.ADoubleFlat);
+        downOneDict.Add(Notes.A, Notes.AFlat); 
+        downOneDict.Add(Notes.ADoubleSharp, Notes.ASharp);
+        downOneDict.Add(Notes.ASharp, Notes.A);
+        downOneDict.Add(Notes.BFlat, Notes.BDoubleFlat);
+        downOneDict.Add(Notes.B, Notes.BFlat);
+        downOneDict.Add(Notes.BSharp, Notes.B);
+        downOneDict.Add(Notes.BDoubleSharp, Notes.BSharp);
+
+        downTwoDict.Add(Notes.C, Notes.CDoubleFlat);
+        downTwoDict.Add(Notes.CSharp, Notes.CFlat);
+        downTwoDict.Add(Notes.CDoubleSharp, Notes.C);
+        downTwoDict.Add(Notes.D, Notes.DDoubleFlat);
+        downTwoDict.Add(Notes.DSharp, Notes.DFlat);
+        downTwoDict.Add(Notes.DDoubleSharp, Notes.D);
+        downTwoDict.Add(Notes.E, Notes.EDoubleFlat);
+        downTwoDict.Add(Notes.ESharp, Notes.EFlat);
+        downTwoDict.Add(Notes.EDoubleSharp, Notes.E);
+        downTwoDict.Add(Notes.F, Notes.FDoubleFlat);
+        downTwoDict.Add(Notes.FSharp, Notes.FFlat);
+        downTwoDict.Add(Notes.FDoubleSharp, Notes.F);
+        downTwoDict.Add(Notes.G, Notes.GDoubleFlat);
+        downTwoDict.Add(Notes.GSharp, Notes.GFlat);
+        downTwoDict.Add(Notes.GDoubleSharp, Notes.G);
+        downTwoDict.Add(Notes.A, Notes.ADoubleFlat);
+        downTwoDict.Add(Notes.ASharp, Notes.AFlat);
+        downTwoDict.Add(Notes.ADoubleSharp, Notes.A);
+        downTwoDict.Add(Notes.B, Notes.BDoubleFlat);
+        downTwoDict.Add(Notes.BSharp, Notes.BFlat);
+        downTwoDict.Add(Notes.BDoubleSharp, Notes.B);
     }
 
     public void Start()
@@ -316,7 +469,7 @@ public class ChordController : MonoBehaviour
         currentChord = dominantSeventh;
 
     }
-
+    
     public void GetNotesButton()
     {
         chordIntervals.Clear();
@@ -347,8 +500,12 @@ public class ChordController : MonoBehaviour
     public List<Notes> SetChordNotes(Chord chord, MasterChord masterChord, int offset)
     {
         List<Notes> list = new List<Notes>();
+
        
+
         Scale scale = scaleDict[masterChord];
+
+       // Debug.Log("chord: " + chord);
 
         foreach (Intervals interval in chord.intervalsList)
         {
@@ -358,7 +515,15 @@ public class ChordController : MonoBehaviour
             }
             if (interval != Intervals.Root)
             {
-                list.Add(scale.notesInScale[intervalIntDict[interval]-1]);
+                if (intervalIntDict[interval] > 7)
+                {
+                   // Debug.Log(intervalIntDict[interval]);
+                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1-7] );
+                }
+                else
+                {
+                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+                }
             }
         }
 
@@ -371,9 +536,29 @@ public class ChordController : MonoBehaviour
     {
         List<Notes> list = new List<Notes>(notes);
 
-        foreach (Intervals interval in chord.intervalsList)
+       //  foreach (Intervals interval in chord.intervalsList)
+            for (int i = 0; i < chord.intervalsList.Count; i++)
+         
         {
-           // if(adjustmentDict[note].)
+            switch (adjustmentDict[chord.intervalsList[i]])
+            {
+                case Adjustment.DownTwo:
+                    list[i] = downTwoDict[notes[i]];
+                    break;
+                case Adjustment.DownOne:
+                    list[i] = downOneDict[notes[i]];
+                    break;
+                case Adjustment.None:
+                    break;
+                case Adjustment.UpOne:
+                    list[i] = upOneDict[notes[i]];
+                    break;
+                case Adjustment.UpTwo:
+                    list[i] = upTwoDict[notes[i]];
+                    break;
+                default:
+                    break;
+            }
         }
 
         return list;

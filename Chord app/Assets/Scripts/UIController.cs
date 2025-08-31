@@ -137,13 +137,19 @@ public class UIController : MonoBehaviour
 
 
 
-    public List<GameObject> inversionButtons = new List<GameObject>();
-    public GameObject rootPositionInversionButton;
-    public GameObject firstInversionButton;
-    public GameObject secondInversionButton;
-    public GameObject thirdInversionButton;
+    //  public List<GameObject> inversionButtons = new List<GameObject>();
+    //  public GameObject rootPositionInversionButton;
+    //  public GameObject firstInversionButton;
+    //  public GameObject secondInversionButton;
+    //  public GameObject thirdInversionButton;
+    public GameObject inversionButtonPrefab;
+    public GameObject inversionButtonParent;
+  
 
 
+    public TextMeshProUGUI noteNamesText;
+
+    
 
     private void Awake()
     {
@@ -436,7 +442,15 @@ public class UIController : MonoBehaviour
 
      
         List<Intervals> intervals = chordController.currentChord.intervalsList;
-        
+
+
+        List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord, offset);
+
+        notesInChord = chordController.AdjustNotes(notesInChord, chord);
+        chordController.notesInCurrentChord = notesInChord;
+
+       
+
         switch (chordController.currentInversion)
         {
             case Inversions.RootPosition:
@@ -457,7 +471,7 @@ public class UIController : MonoBehaviour
             
         }
 
-
+        string noteNames = ""; 
 
         for (int i = 0; i < notes.Count; i++)
         {
@@ -469,15 +483,19 @@ public class UIController : MonoBehaviour
           
             keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
 
+          
         }
 
 
-
-        List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord, offset);
         foreach (Notes note in notesInChord)
         {
-            Debug.Log(note.ToString());
+            noteNames = noteNames + chordController.noteNameDict[note] + " "; 
         }
+
+        noteNamesText.text = noteNames;
+
+
+       
 
     }
 
@@ -487,10 +505,11 @@ public class UIController : MonoBehaviour
         chordController.currentInversion = Inversions.RootPosition;
         SetChordInversionText();
 
-        inversionController.SetInversionButtons();
-
+       
         ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
         SetChordText();
+        inversionController.SetInversionButtons();
+
     }
 
     public void SetupChooseMasterChordPanel()
@@ -526,7 +545,7 @@ public class UIController : MonoBehaviour
     public void SetChordInversionText()
     {
         chordInversionText.text = inversionsNameDict[chordController.currentInversion];
-
+       
     }
 
     public void SetupChooseChordTypePanel()
