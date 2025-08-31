@@ -103,6 +103,7 @@ public class UIController : MonoBehaviour
 
 
     public Dictionary<MasterChord, Image> firstOctaveMasterChordDict = new Dictionary<MasterChord, Image>();
+    public Dictionary<Notes, Image> firstOctaveNotesDict = new Dictionary<Notes, Image>();
 
     public List<Image> ListOfKeyImages = new List<Image>();
     public List<Image> ListOfWhiteKeyImages = new List<Image>();
@@ -150,7 +151,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI noteNamesText;
 
     
-
+  
     private void Awake()
     {
         ListOfKeyImages.Add(C1);
@@ -244,6 +245,24 @@ public class UIController : MonoBehaviour
         firstOctaveMasterChordDict.Add(MasterChord.ASharp, ASharpBFlat1);
         firstOctaveMasterChordDict.Add(MasterChord.BFlat, ASharpBFlat1);
         firstOctaveMasterChordDict.Add(MasterChord.B, B1);
+
+        firstOctaveNotesDict.Add(Notes.C, C1);
+        firstOctaveNotesDict.Add(Notes.CSharp, CSharpDFlat1);
+        firstOctaveNotesDict.Add(Notes.DFlat, CSharpDFlat1);
+        firstOctaveNotesDict.Add(Notes.D, D1);
+        firstOctaveNotesDict.Add(Notes.DSharp, DSharpEFlat1);
+        firstOctaveNotesDict.Add(Notes.EFlat, DSharpEFlat1);
+        firstOctaveNotesDict.Add(Notes.E, E1);
+        firstOctaveNotesDict.Add(Notes.F, F1);
+        firstOctaveNotesDict.Add(Notes.FSharp, FSharpGFlat1);
+        firstOctaveNotesDict.Add(Notes.GFlat, FSharpGFlat1);
+        firstOctaveNotesDict.Add(Notes.G, G1);
+        firstOctaveNotesDict.Add(Notes.GSharp, GSharpAFlat1);
+        firstOctaveNotesDict.Add(Notes.AFlat, GSharpAFlat1);
+        firstOctaveNotesDict.Add(Notes.A, A1);
+        firstOctaveNotesDict.Add(Notes.ASharp, ASharpBFlat1);
+        firstOctaveNotesDict.Add(Notes.BFlat, ASharpBFlat1);
+        firstOctaveNotesDict.Add(Notes.B, B1);
 
         ListOfExtra5KeyImages.Add(C3);
         ListOfExtra5KeyImages.Add(CSharpDFlat3);
@@ -414,26 +433,10 @@ public class UIController : MonoBehaviour
         }
 
         
-   
-        Image root = firstOctaveChordDict[masterChord];
+   //put these back if it doesn't work
+      //  Image root = firstOctaveChordDict[masterChord];
 
-        switch (chordController.currentInversion)
-        {
-            case Inversions.RootPosition:
-                //leave it
-                break;
-            case Inversions.FirstInversion:
-
-                break;
-            case Inversions.SecondInversion:
-                break;
-            case Inversions.ThirdInversion:
-                break;
-            default:
-                break;
-        }
-
-        int offset = keyImageList.IndexOf(root);
+//        int offset = keyImageList.IndexOf(root);
 
 
 
@@ -444,12 +447,12 @@ public class UIController : MonoBehaviour
         List<Intervals> intervals = chordController.currentChord.intervalsList;
 
 
-        List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord, offset);
+        List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord);
 
         notesInChord = chordController.AdjustNotes(notesInChord, chord);
         chordController.notesInCurrentChord = notesInChord;
 
-       
+        
 
         switch (chordController.currentInversion)
         {
@@ -470,6 +473,12 @@ public class UIController : MonoBehaviour
                 break;
             
         }
+
+        inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
+
+        Image root = firstOctaveNotesDict[notesInChord[0]];
+     
+        int offset = keyImageList.IndexOf(root);
 
         string noteNames = ""; 
 

@@ -90,13 +90,12 @@ public class InversionController : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        GameObject buttonGO = new GameObject();
+        GameObject buttonGO;
         InversionButtonPrefabScrpt script;
 
         switch (chordController.currentChord.intervalsList.Count)
         {
-           
-
+        
                 case 3:
                 for (int i = 0; i < 3; i++)
                 {
@@ -175,7 +174,50 @@ public class InversionController : MonoBehaviour
     }
 
     
-    
+    public List<Notes> InvertNotesList(List<Notes> notes, Inversions inversion)
+    {
+      
+        switch (inversion)
+        {
+            case Inversions.RootPosition:
+                chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
+                break;
+            case Inversions.FirstInversion:
+                Notes n = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(n);
+
+                break;
+            case Inversions.SecondInversion:
+                Notes o = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(o);
+                Notes p = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(p);
+                break;
+            case Inversions.ThirdInversion:
+                Notes q = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(q);
+                Notes r = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(r);
+                Notes s = notes[0];
+                notes.Remove(notes[0]);
+                notes.Add(s);
+                break;
+
+            default:
+               
+                break;
+        }
+
+      
+
+
+        return notes;
+    }
     
 
 
