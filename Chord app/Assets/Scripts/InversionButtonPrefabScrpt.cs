@@ -22,7 +22,7 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
         uIController.ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
         uIController.SetChordInversionText();
         uIController.chordName.text = buttonText.text;
-    //    uIController.ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
+   
 
     }
 }

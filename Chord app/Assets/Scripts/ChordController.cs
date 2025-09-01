@@ -497,6 +497,7 @@ public class ChordController : MonoBehaviour
         return list;
     }
 
+
     public List<Notes> SetChordNotes(Chord chord, MasterChord masterChord)
     {
         List<Notes> list = new List<Notes>();

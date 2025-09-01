@@ -248,21 +248,45 @@ public class UIController : MonoBehaviour
 
         firstOctaveNotesDict.Add(Notes.C, C1);
         firstOctaveNotesDict.Add(Notes.CSharp, CSharpDFlat1);
+        firstOctaveNotesDict.Add(Notes.CDoubleSharp, D1);
+        firstOctaveNotesDict.Add(Notes.CFlat, B1);
+        firstOctaveNotesDict.Add(Notes.CDoubleFlat, ASharpBFlat1);
+
         firstOctaveNotesDict.Add(Notes.DFlat, CSharpDFlat1);
         firstOctaveNotesDict.Add(Notes.D, D1);
         firstOctaveNotesDict.Add(Notes.DSharp, DSharpEFlat1);
+        firstOctaveNotesDict.Add(Notes.DDoubleSharp, E1);
+        firstOctaveNotesDict.Add(Notes.DDoubleFlat, C1);
+
         firstOctaveNotesDict.Add(Notes.EFlat, DSharpEFlat1);
         firstOctaveNotesDict.Add(Notes.E, E1);
+        firstOctaveNotesDict.Add(Notes.ESharp, F1);
+        firstOctaveNotesDict.Add(Notes.EDoubleSharp, FSharpGFlat1);
+        firstOctaveNotesDict.Add(Notes.EDoubleFlat, D1);
+
         firstOctaveNotesDict.Add(Notes.F, F1);
+        firstOctaveNotesDict.Add(Notes.FFlat, E1);
         firstOctaveNotesDict.Add(Notes.FSharp, FSharpGFlat1);
+        firstOctaveNotesDict.Add(Notes.FDoubleSharp, G1);
+        firstOctaveNotesDict.Add(Notes.FDoubleFlat, DSharpEFlat1);
+
         firstOctaveNotesDict.Add(Notes.GFlat, FSharpGFlat1);
         firstOctaveNotesDict.Add(Notes.G, G1);
         firstOctaveNotesDict.Add(Notes.GSharp, GSharpAFlat1);
+        firstOctaveNotesDict.Add(Notes.GDoubleSharp, A1);
+        firstOctaveNotesDict.Add(Notes.GDoubleFlat, F1);
+
         firstOctaveNotesDict.Add(Notes.AFlat, GSharpAFlat1);
         firstOctaveNotesDict.Add(Notes.A, A1);
         firstOctaveNotesDict.Add(Notes.ASharp, ASharpBFlat1);
+        firstOctaveNotesDict.Add(Notes.ADoubleSharp, B1);
+        firstOctaveNotesDict.Add(Notes.ADoubleFlat, G1);
+
         firstOctaveNotesDict.Add(Notes.BFlat, ASharpBFlat1);
         firstOctaveNotesDict.Add(Notes.B, B1);
+        firstOctaveNotesDict.Add(Notes.BSharp, C2);
+        firstOctaveNotesDict.Add(Notes.BDoubleFlat, A1);
+        firstOctaveNotesDict.Add(Notes.BDoubleSharp, CSharpDFlat1);
 
         ListOfExtra5KeyImages.Add(C3);
         ListOfExtra5KeyImages.Add(CSharpDFlat3);
@@ -432,12 +456,6 @@ public class UIController : MonoBehaviour
         
         }
 
-        
-   //put these back if it doesn't work
-      //  Image root = firstOctaveChordDict[masterChord];
-
-//        int offset = keyImageList.IndexOf(root);
-
 
 
         List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
@@ -474,24 +492,42 @@ public class UIController : MonoBehaviour
             
         }
 
-        inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
+      notesInChord =  inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
 
-        Image root = firstOctaveNotesDict[notesInChord[0]];
-     
-        int offset = keyImageList.IndexOf(root);
+        Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
+        Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
 
-        string noteNames = ""; 
+      
+        int offset = keyImageList.IndexOf(chordRoot);
 
+
+
+        string noteNames = "";
+
+        List<int> tempNotes = new List<int>(notes);
+        tempNotes.Sort();
+        int smallestInterval = tempNotes[0];
+
+      
         for (int i = 0; i < notes.Count; i++)
         {
+            int adjustedInterval = notes[i];
+
+            //bring to the left
+            if (smallestInterval + offset > 11)
+            {
+                adjustedInterval = notes[i] - 12;
+               
+
+            }
             
-         
-            SetKeyColour(keyImageList[notes[i] + offset]);
+            SetKeyColour(keyImageList[adjustedInterval + offset]);
 
             //set the note text
           
-            keyTextDictToUse[keyImageList[notes[i] + offset]].text = chordController.intervalNamesDict[intervals[i]];
-
+        
+            keyTextDictToUse[keyImageList[adjustedInterval + offset]].text = chordController.intervalNamesDict[intervals[i]];
+           
           
         }
 
@@ -503,7 +539,7 @@ public class UIController : MonoBehaviour
 
         noteNamesText.text = noteNames;
 
-
+        
        
 
     }

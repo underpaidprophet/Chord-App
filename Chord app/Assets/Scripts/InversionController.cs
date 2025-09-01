@@ -218,7 +218,5 @@ public class InversionController : MonoBehaviour
 
         return notes;
     }
-    
-
-
+   
 }
