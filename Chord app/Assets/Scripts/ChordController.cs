@@ -493,17 +493,9 @@ public class ChordController : MonoBehaviour
 
         foreach (Intervals interval in chord.intervalsList)
         {
-            if (rootThreeSeven == true)
-            {
-                if (intervalIntDict[interval] == 0 || intervalIntDict[interval] == 3 || intervalIntDict[interval] == 7)
-                {
-                    list.Add(intervalsSemitonesDictionary[interval]);
-                }
-            }
-            else
-            {
+            
                 list.Add(intervalsSemitonesDictionary[interval]);
-            }
+            
         }
 
         return list;
@@ -531,37 +523,21 @@ public class ChordController : MonoBehaviour
             if (interval != Intervals.Root)
             {
 
-                if (rootThreeSeven)
-                {
+             
                     if (intervalIntDict[interval] > 7)
                     {
-                        if ( intervalIntDict[interval] == 0 || intervalIntDict[interval]== 0|| intervalIntDict[interval] ==  7)
-                        {
-                            // Debug.Log(intervalIntDict[interval]);
+                          // Debug.Log(intervalIntDict[interval]);
                             list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
-                        }
+                        
                     }
                     else
                     {
-                        if (intervalIntDict[interval] == 0 || intervalIntDict[interval] == 3 || intervalIntDict[interval] == 7)
-                        {
+                        
                             list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
-                        }
+                        
                     }
-                }
-                else
-                {
-
-                    if (intervalIntDict[interval] > 7)
-                    {
-                        // Debug.Log(intervalIntDict[interval]);
-                        list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
-                    }
-                    else
-                    {
-                        list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
-                    }
-                }
+                
+             
             }
         }
 

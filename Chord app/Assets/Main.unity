@@ -5101,6 +5101,7 @@ GameObject:
   - component: {fileID: 560057951}
   - component: {fileID: 560057952}
   - component: {fileID: 560057953}
+  - component: {fileID: 560057954}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -5204,6 +5205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fStartingKeyboardController: {fileID: 560057952}
   inversionController: {fileID: 560057953}
+  rootThreeSevenController: {fileID: 560057954}
   regularKeybaordLocation: {x: -155, y: 79}
   regularKeybaordSize: {x: 0.5, y: 0.5, z: 0.5}
   extra5KeybaordLocation: {x: -160, y: 79}
@@ -5395,6 +5397,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chordController: {fileID: 560057949}
   uIController: {fileID: 560057951}
+--- !u!114 &560057954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560057948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a2a3aada010534c86cb6fdb701155e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chordController: {fileID: 560057949}
 --- !u!1 &564248105
 GameObject:
   m_ObjectHideFlags: 0
@@ -12206,7 +12221,7 @@ GameObject:
   - component: {fileID: 1314215556}
   - component: {fileID: 1314215555}
   m_Layer: 5
-  m_Name: Inversions Button
+  m_Name: All Notes Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14820,7 +14835,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show inversions
+  m_text: 'All
+
+    Notes'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
   m_sharedMaterial: {fileID: -878641085884535755, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
