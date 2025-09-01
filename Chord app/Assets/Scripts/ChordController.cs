@@ -92,6 +92,8 @@ public class ChordController : MonoBehaviour
 
     public List<Notes> notesInCurrentChord = new List<Notes>();
 
+    public bool rootThreeSeven; 
+
     private void Awake()
     {
 
@@ -491,7 +493,17 @@ public class ChordController : MonoBehaviour
 
         foreach (Intervals interval in chord.intervalsList)
         {
-            list.Add(intervalsSemitonesDictionary[interval]);
+            if (rootThreeSeven == true)
+            {
+                if (intervalIntDict[interval] == 0 || intervalIntDict[interval] == 3 || intervalIntDict[interval] == 7)
+                {
+                    list.Add(intervalsSemitonesDictionary[interval]);
+                }
+            }
+            else
+            {
+                list.Add(intervalsSemitonesDictionary[interval]);
+            }
         }
 
         return list;
@@ -510,20 +522,45 @@ public class ChordController : MonoBehaviour
 
         foreach (Intervals interval in chord.intervalsList)
         {
+         
+
             if (interval == Intervals.Root)
             {
                 list.Add(scale.notesInScale[intervalIntDict[interval]]);
             }
             if (interval != Intervals.Root)
             {
-                if (intervalIntDict[interval] > 7)
+
+                if (rootThreeSeven)
                 {
-                   // Debug.Log(intervalIntDict[interval]);
-                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1-7] );
+                    if (intervalIntDict[interval] > 7)
+                    {
+                        if ( intervalIntDict[interval] == 0 || intervalIntDict[interval]== 0|| intervalIntDict[interval] ==  7)
+                        {
+                            // Debug.Log(intervalIntDict[interval]);
+                            list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+                        }
+                    }
+                    else
+                    {
+                        if (intervalIntDict[interval] == 0 || intervalIntDict[interval] == 3 || intervalIntDict[interval] == 7)
+                        {
+                            list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+                        }
+                    }
                 }
                 else
                 {
-                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+
+                    if (intervalIntDict[interval] > 7)
+                    {
+                        // Debug.Log(intervalIntDict[interval]);
+                        list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+                    }
+                    else
+                    {
+                        list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+                    }
                 }
             }
         }
@@ -533,15 +570,18 @@ public class ChordController : MonoBehaviour
         return list;
     }
 
-    public List<Notes> AdjustNotes(List<Notes> notes, Chord chord)
+    public List<Notes> AdjustNotes(List<Notes> notes, List<Intervals> intervalsList)
     {
         List<Notes> list = new List<Notes>(notes);
 
        //  foreach (Intervals interval in chord.intervalsList)
-            for (int i = 0; i < chord.intervalsList.Count; i++)
+        for (int i = 0; i < intervalsList.Count; i++)
          
         {
-            switch (adjustmentDict[chord.intervalsList[i]])
+          
+
+
+            switch (adjustmentDict[intervalsList[i]])
             {
                 case Adjustment.DownTwo:
                     list[i] = downTwoDict[notes[i]];

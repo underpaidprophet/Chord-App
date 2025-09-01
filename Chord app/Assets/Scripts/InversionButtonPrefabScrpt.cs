@@ -19,6 +19,7 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
     public void ClickedOn()
     {
         chordController.currentInversion = thisInversion;
+        uIController.CheckRootSevenButton();
         uIController.ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
         uIController.SetChordInversionText();
         uIController.chordName.text = buttonText.text;

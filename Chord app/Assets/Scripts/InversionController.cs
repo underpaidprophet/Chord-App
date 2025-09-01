@@ -93,6 +93,8 @@ public class InversionController : MonoBehaviour
         GameObject buttonGO;
         InversionButtonPrefabScrpt script;
 
+
+
         switch (chordController.currentChord.intervalsList.Count)
         {
         
