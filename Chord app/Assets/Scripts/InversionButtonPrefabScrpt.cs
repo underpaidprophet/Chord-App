@@ -9,6 +9,7 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
     public Inversions thisInversion;
     public ChordController chordController;
     public UIController uIController;
+    public RootThreeSevenController rootThreeSevenController;
 
     public TextMeshProUGUI buttonText;
     public TextMeshProUGUI inversionName;
@@ -19,10 +20,24 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
     public void ClickedOn()
     {
         chordController.currentInversion = thisInversion;
-     //   uIController.CheckRootSevenButton();
-        uIController.ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
+        //   uIController.CheckRootSevenButton();
+
+     
+        switch (uIController.currentChordVariation)
+        {
+            case ChordVariation.Intervals:
+                uIController.ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
+                break;
+            case ChordVariation.RootThreeSeven:
+                
+                uIController.ShowChordKeys(chordController.currentMasterChord, rootThreeSevenController.RootThreeSevenChord(chordController.currentChord));
+                break;
+            default:
+                break;
+        }
+      
         uIController.SetChordInversionText();
-        uIController.chordName.text = buttonText.text;
+        uIController.SetChordText();
    
 
     }

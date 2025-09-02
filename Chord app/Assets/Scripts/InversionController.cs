@@ -6,6 +6,7 @@ public class InversionController : MonoBehaviour
 {
     public ChordController chordController;
     public UIController uIController;
+    public RootThreeSevenController rootThreeSevenController;
     public List<int> RootPoositionSemitones(List<int> list)
     {
 
@@ -84,7 +85,10 @@ public class InversionController : MonoBehaviour
     public void SetInversionButtons()
     {
 
-        
+
+        uIController.rootThreeSevenButtonParent.SetActive(false);
+
+        uIController.inversionButtonParent.SetActive(true);
         foreach (Transform child in uIController.inversionButtonParent.transform)
         {
             Destroy(child.gameObject);
@@ -111,7 +115,7 @@ public class InversionController : MonoBehaviour
                     script.chordController = chordController;
                     script.uIController = uIController;
                     //    script.buttonText.text = chordController.masterChordNameDict[masterChord];
-
+                    script.rootThreeSevenController = rootThreeSevenController;
                     script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordController.currentChord.chordType];
                     script.inversionName.text = uIController.inversionsNameDict[script.thisInversion];
 
@@ -138,6 +142,7 @@ public class InversionController : MonoBehaviour
 
                     script.chordController = chordController;
                     script.uIController = uIController;
+                    script.rootThreeSevenController = rootThreeSevenController;
                     //    script.buttonText.text = chordController.masterChordNameDict[masterChord];
                     script.buttonText.text = chordController.masterChordNameDict[chordController.currentMasterChord] + chordController.chordTypeNameDict[chordController.currentChord.chordType];
                     script.inversionName.text = uIController.inversionsNameDict[script.thisInversion];

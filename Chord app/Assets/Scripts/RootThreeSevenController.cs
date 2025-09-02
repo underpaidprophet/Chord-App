@@ -5,6 +5,9 @@ using UnityEngine;
 public class RootThreeSevenController : MonoBehaviour
 {
     public ChordController chordController;
+    public UIController uIController;
+    public RootThreeSevenController rootThreeSevenController;
+
 
    
     public Chord RootThreeSevenChord(Chord chord)

@@ -6,6 +6,7 @@ public class ChordController : MonoBehaviour
 {
 
     public UIController uIController;
+    public RootThreeSevenController rootThreeSevenController;
     Dictionary<Intervals, int> intervalsSemitonesDictionary = new Dictionary<Intervals, int>();
 
     public Chord major;
@@ -504,42 +505,102 @@ public class ChordController : MonoBehaviour
 
     public List<Notes> SetChordNotes(Chord chord, MasterChord masterChord)
     {
+
         List<Notes> list = new List<Notes>();
-
-       
-
         Scale scale = scaleDict[masterChord];
 
-       // Debug.Log("chord: " + chord);
-
-        foreach (Intervals interval in chord.intervalsList)
+        switch (uIController.currentChordVariation)
         {
-         
+            case ChordVariation.Intervals:
 
-            if (interval == Intervals.Root)
-            {
-                list.Add(scale.notesInScale[intervalIntDict[interval]]);
-            }
-            if (interval != Intervals.Root)
-            {
 
-             
-                    if (intervalIntDict[interval] > 7)
+                // Debug.Log("chord: " + chord);
+
+                foreach (Intervals interval in chord.intervalsList)
+                {
+
+
+                    if (interval == Intervals.Root)
                     {
-                          // Debug.Log(intervalIntDict[interval]);
+                        list.Add(scale.notesInScale[intervalIntDict[interval]]);
+                    }
+                    if (interval != Intervals.Root)
+                    {
+
+
+                        if (intervalIntDict[interval] > 7)
+                        {
+                            // Debug.Log(intervalIntDict[interval]);
                             list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
-                        
-                    }
-                    else
-                    {
-                        
+
+                        }
+                        else
+                        {
+
                             list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
-                        
+
+                        }
+
+
                     }
-                
-             
-            }
+                }
+
+
+                break;
+            case ChordVariation.RootThreeSeven:
+
+                if (rootThreeSeven)
+                {
+
+                    foreach (Intervals interval in rootThreeSevenController.RootThreeSevenChord(chord).intervalsList) 
+                    {
+                      
+                        // Debug.Log(intervalIntDict[interval]);
+                        //list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+                        if (intervalIntDict[interval] > 7)
+                        {
+                            if (intervalIntDict[interval] == 0 || intervalIntDict[interval] == 0 || intervalIntDict[interval] == 7)
+                            {
+                                // Debug.Log(intervalIntDict[interval]);
+                                list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+                            }
+                        }
+                        else
+                        {
+                            if (interval == Intervals.Root)
+                            {
+                                list.Add(scale.notesInScale[intervalIntDict[interval]]);
+                            }
+                            if (interval != Intervals.Root)
+                            {
+
+
+                                if (intervalIntDict[interval] > 7)
+                                {
+                                    // Debug.Log(intervalIntDict[interval]);
+                                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+
+                                }
+                                else
+                                {
+
+                                    list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+
+                                }
+
+
+                            }
+
+                        }
+                    }
+                }
+
+                break;
+            default:
+                break;
         }
+     
+       
 
 
 
