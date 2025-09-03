@@ -93,7 +93,9 @@ public class ChordController : MonoBehaviour
 
     public List<Notes> notesInCurrentChord = new List<Notes>();
 
-    public bool rootThreeSeven; 
+    public bool rootThreeSeven;
+
+    public Dictionary<ChordType, ChordQuality> chordQualityDict = new Dictionary<ChordType, ChordQuality>();
 
     private void Awake()
     {
@@ -462,6 +464,39 @@ public class ChordController : MonoBehaviour
         downTwoDict.Add(Notes.B, Notes.BDoubleFlat);
         downTwoDict.Add(Notes.BSharp, Notes.BFlat);
         downTwoDict.Add(Notes.BDoubleSharp, Notes.B);
+
+        chordQualityDict.Add(ChordType.Major, ChordQuality.Major);
+        chordQualityDict.Add(ChordType.Minor, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.DominantSeventh, ChordQuality.Dominant);
+        chordQualityDict.Add(ChordType.MinorSeventh, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.MajorSeventh, ChordQuality.Major);
+        chordQualityDict.Add(ChordType.MinorSixth, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.Fifth, ChordQuality.Major);
+        chordQualityDict.Add(ChordType.DominantNinth, ChordQuality.Dominant);
+        chordQualityDict.Add(ChordType.MinorNinth, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.MajorNinth, ChordQuality.Major);
+        chordQualityDict.Add(ChordType.DominantEleventh, ChordQuality.Dominant);
+        chordQualityDict.Add(ChordType.MinorEleventh, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.MajorEleventh, ChordQuality.Major);
+        chordQualityDict.Add(ChordType.DominantThirteenth, ChordQuality.Dominant);
+        chordQualityDict.Add(ChordType.MinorThirteenth, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.MajorThirteenth, ChordQuality.Major);
+        /*
+         * //  chordQualityDict.Add(ChordType.SixthNinth, "6/9");
+     //   chordQualityDict.Add(ChordType.AddNinth, "add9");
+     //   chordQualityDict.Add(ChordType.AddSecond, "add2");
+        chordQualityDict.Add(ChordType.SeventhFlatFifth, "7b5");
+        chordQualityDict.Add(ChordType.SeventhSharpFifth, "7#5");
+        chordQualityDict.Add(ChordType.Sus2, "sus2");
+        chordQualityDict.Add(ChordType.Sus4, "sus4");
+        chordQualityDict.Add(ChordType.Dim, "°");
+        chordQualityDict.Add(ChordType.DimSeventh, "°7");
+        chordQualityDict.Add(ChordType.MinorSeventhFlatFifth, ChordQuality.Minor);
+        chordQualityDict.Add(ChordType.Aug, "aug");
+        chordQualityDict.Add(ChordType.AugSeventh, "aug7");
+         // chordQualityDict.Add(ChordType.MinorMajorSeventh, "mM7");
+       // chordQualityDict.Add(ChordType.Sixth, "6");
+        */
     }
 
     public void Start()
@@ -789,6 +824,15 @@ public enum Adjustment
     None,
     UpOne,
     UpTwo
+}
+public enum ChordQuality
+{
+    Major,
+    Minor,
+    Dominant,
+    Augmented,
+    Diminished,
+    HalfDiminished
 }
 
 

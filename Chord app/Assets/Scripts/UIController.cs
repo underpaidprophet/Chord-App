@@ -928,7 +928,7 @@ public class UIController : MonoBehaviour
             List<Notes> invertedNotes = inversionController.InvertNotesList(notesInChord, script.inversion);
 
             string noteNames = "";
-            Debug.Log(i + " " + invertedNotes[0] + " " + invertedNotes[1] + " " + invertedNotes[2]);
+           
             foreach (Notes note in invertedNotes)
             {
                 noteNames = noteNames + chordController.noteNameDict[note] + " ";
@@ -1005,7 +1005,8 @@ public enum KeyboardLayout
 public enum ChordVariation
 {
     Intervals,
-    RootThreeSeven
+    RootThreeSeven,
+    Rootless
 
 }
 
