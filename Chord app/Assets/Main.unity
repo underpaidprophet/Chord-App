@@ -7068,7 +7068,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Root \nThree \nSeven"
+  m_text: "Root \nThree \nSeven\nShells"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
   m_sharedMaterial: {fileID: -878641085884535755, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
@@ -12226,7 +12226,7 @@ GameObject:
   - component: {fileID: 1314215556}
   - component: {fileID: 1314215555}
   m_Layer: 5
-  m_Name: All Notes Button
+  m_Name: Closed voicings Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14839,9 +14839,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'All
+  m_text: 'Closed
 
-    Notes'
+    Voicings'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
   m_sharedMaterial: {fileID: -878641085884535755, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}

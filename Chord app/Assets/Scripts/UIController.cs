@@ -531,8 +531,7 @@ public class UIController : MonoBehaviour
         }
         */
         notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
-        chordController.notesInCurrentChord = notesInChord;
-
+       
         
 
         switch (chordController.currentInversion)
@@ -554,8 +553,10 @@ public class UIController : MonoBehaviour
                 break;
             
         }
+        
+        notesInChord =  inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
+        chordController.notesInCurrentChord = notesInChord;
 
-      notesInChord =  inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
 
         Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
         Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
@@ -852,7 +853,7 @@ public class UIController : MonoBehaviour
 
         GameObject buttonGO;
         RootThreeSevenInversionButtonPrefabScript script;
-
+       
 
         //set the buttons
         for (int i = 0; i < 3; i++)
@@ -870,47 +871,79 @@ public class UIController : MonoBehaviour
             script.rootThreeSevenController = rootThreeSevenController;
       
             script.inversionName.text = rootThreeSevenInversionNamesDict[script.thisR37Inversion];
-           
+            ////////////////////
 
-       
-            /*// Fix it here
 
-            foreach (Notes note in chordController.ge)
+            List<int> notes = chordController.CalculatIntervalss(chordController.currentMasterChord, chordController.currentChord);
+
+
+
+            List<Intervals> intervals = new List<Intervals>(chordController.currentChord.intervalsList);
+
+            List<Intervals> tempIntervals = new List<Intervals>(chordController.currentChord.intervalsList);
+
+            switch (currentChordVariation)
+            {
+                case ChordVariation.Intervals:
+                    break;
+                case ChordVariation.RootThreeSeven:
+                    foreach (Intervals interval in intervals)
+                    {
+                        if (chordController.intervalIntDict[interval] != 0 && chordController.intervalIntDict[interval] != 3 && chordController.intervalIntDict[interval] != 7)
+                        {
+                            tempIntervals.Remove(interval);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+
+
+            intervals = tempIntervals;
+
+            List<Notes> notesInChord = chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
+
+            List<Intervals> chordIntervalsList = new List<Intervals>();
+            foreach (Intervals interval in chordController.currentChord.intervalsList)
+            {
+              
+                        if (chordController.intervalIntDict[interval] == 0 || chordController.intervalIntDict[interval] == 3 || chordController.intervalIntDict[interval] == 7)
+                        {
+                            chordIntervalsList.Add(interval);
+                        }
+
+                     
+               
+            }
+
+         
+            notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
+
+            notesInChord = inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
+
+        
+
+            List<Notes> invertedNotes = inversionController.InvertNotesList(notesInChord, script.inversion);
+
+            string noteNames = "";
+            Debug.Log(i + " " + invertedNotes[0] + " " + invertedNotes[1] + " " + invertedNotes[2]);
+            foreach (Notes note in invertedNotes)
             {
                 noteNames = noteNames + chordController.noteNameDict[note] + " ";
             }
 
             script.inversionNotes.text = noteNames;
-
+            
 
             script.button.onClick.AddListener(script.ClickedOn);
-            */
             
+          
 
         }
 
-        // chordName.text = chordController.currentChord;
-
-        /*
-        chordController.rootThreeSeven = !chordController.rootThreeSeven;
-        ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
-
-        if (chordController.rootThreeSeven)
-        {
-            inversionButtonParent.SetActive(false);
-            rootThreeSevenButtonParent.SetActive(true);
-            currentChordVariation = ChordVariation.RootThreeSeven;
-            rootThreeSevenChordName.text = chordName.text;
-            rootThreeSevenText.text = "Root 3 7\n" + noteNamesText.text;
-            
-        }
-        if (!chordController.rootThreeSeven)
-        {
-            //change this later probably
-            inversionButtonParent.SetActive(true);
-            rootThreeSevenButtonParent.SetActive(false);
-        }
-        */
+      
     }
 
     public void InversionsButton()
