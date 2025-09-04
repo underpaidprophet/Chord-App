@@ -5,6 +5,7 @@ using UnityEngine;
 public class RootlessController : MonoBehaviour
 {
     public ChordController chordController;
+    public UIController uIController;
 
     public Chord RootlessChord(Chord chord)
     {
@@ -64,6 +65,20 @@ public class RootlessController : MonoBehaviour
 
         return newList;
     }
+
+    public void RootlessButton()
+    {
+        uIController.currentChordVariation = ChordVariation.Rootless;
+        uIController.rootThreeSevenButtonParent.SetActive(false);
+        uIController.inversionButtonParent.SetActive(false);
+
+        //resetting it all
+        chordController.currentInversion = Inversions.RootPosition;
+       
+        uIController.ShowChordKeys(chordController.currentMasterChord, RootlessChord(chordController.currentChord));
+        uIController.SetChordInversionText();
+    }
+
 }
 
 

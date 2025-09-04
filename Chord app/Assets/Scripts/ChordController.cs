@@ -584,8 +584,6 @@ public class ChordController : MonoBehaviour
                 break;
             case ChordVariation.RootThreeSeven:
 
-                if (rootThreeSeven)
-                {
 
                     foreach (Intervals interval in rootThreeSevenController.RootThreeSevenChord(chord).intervalsList) 
                     {
@@ -628,7 +626,7 @@ public class ChordController : MonoBehaviour
 
                         }
                     }
-                }
+                
 
                 break;
             default:

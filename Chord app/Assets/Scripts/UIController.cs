@@ -159,6 +159,9 @@ public class UIController : MonoBehaviour
     public GameObject rootThreeSevenButton;
     public GameObject rootThreeSevenInversionButtonPrefab;
 
+    public GameObject rootlessButtonParent;
+    public GameObject rootlessButtonPrefab;
+
     public Dictionary<RootThreeSevenInversions, string> rootThreeSevenInversionNamesDict = new Dictionary<RootThreeSevenInversions, string>();
 
     private void Awake()
@@ -469,8 +472,6 @@ public class UIController : MonoBehaviour
         
         }
 
-
-
         List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
 
 
@@ -531,8 +532,7 @@ public class UIController : MonoBehaviour
         }
         */
         notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
-       
-        
+
 
         switch (chordController.currentInversion)
         {
@@ -558,8 +558,9 @@ public class UIController : MonoBehaviour
         chordController.notesInCurrentChord = notesInChord;
 
 
-        Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
-        Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
+      //  Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
+      //  Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
+        Image chordRoot = firstOctaveChordDict[chordController.currentMasterChord];
 
       
         int offset = keyImageList.IndexOf(chordRoot);
@@ -577,6 +578,8 @@ public class UIController : MonoBehaviour
         {
             int adjustedInterval = notes[i];
 
+
+
             //bring to the left
             if (smallestInterval + offset > 11)
             {
@@ -584,7 +587,9 @@ public class UIController : MonoBehaviour
                
 
             }
-            
+
+
+
             SetKeyColour(keyImageList[adjustedInterval + offset]);
 
             //set the note text
@@ -657,7 +662,24 @@ public class UIController : MonoBehaviour
 
     public void SetChordInversionText()
     {
-        chordInversionText.text = inversionsNameDict[chordController.currentInversion];
+        switch (currentChordVariation)
+        {
+            case ChordVariation.Intervals:
+                chordInversionText.text = inversionsNameDict[chordController.currentInversion];
+                break;
+            case ChordVariation.RootThreeSeven:
+
+                chordInversionText.text = rootThreeSevenInversionNamesDict[(RootThreeSevenInversions)chordController.currentInversion];
+                break;
+            case ChordVariation.Rootless:
+                break;
+            default:
+                break;
+        }
+
+
+
+      
        
     }
 
@@ -829,13 +851,14 @@ public class UIController : MonoBehaviour
 
     public void RootThreeSevenButton()
     {
-        chordController.rootThreeSeven = true;
+     
         currentChordVariation = ChordVariation.RootThreeSeven;
 
 
         rootThreeSevenButtonParent.SetActive(true);
 
         inversionButtonParent.SetActive(false);
+        rootlessButtonParent.SetActive(false);
 
 
         //resetting it all
@@ -948,7 +971,7 @@ public class UIController : MonoBehaviour
 
     public void InversionsButton()
     {
-        chordController.rootThreeSeven = false;
+        rootlessButtonParent.SetActive(false);
         rootThreeSevenButtonParent.SetActive(false);
         currentChordVariation = ChordVariation.Intervals;
         chordController.currentInversion = Inversions.RootPosition;

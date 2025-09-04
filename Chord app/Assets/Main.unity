@@ -2610,7 +2610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 623, y: 591}
+  m_AnchoredPosition: {x: 633, y: 575}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &240910579
@@ -2635,8 +2635,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: first inversion
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 39a1f94a3352ab844a08f7eb0c6789f8, type: 2}
-  m_sharedMaterial: {fileID: -6098834569621990571, guid: 39a1f94a3352ab844a08f7eb0c6789f8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
+  m_sharedMaterial: {fileID: -878641085884535755, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2660,8 +2660,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55
-  m_fontSizeBase: 55
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3200,6 +3200,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 288431758}
   m_CullTransparentMesh: 1
+--- !u!1 &288803931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 288803932}
+  - component: {fileID: 288803933}
+  m_Layer: 5
+  m_Name: Rootless button parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &288803932
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288803931}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 392380445}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 335}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &288803933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288803931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 20
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &290170163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4025,6 +4088,7 @@ RectTransform:
   - {fileID: 1097397354}
   - {fileID: 1426338659}
   - {fileID: 1368848148}
+  - {fileID: 288803932}
   - {fileID: 101765884}
   m_Father: {fileID: 1857040606}
   m_RootOrder: -1
@@ -5103,6 +5167,7 @@ GameObject:
   - component: {fileID: 560057952}
   - component: {fileID: 560057953}
   - component: {fileID: 560057954}
+  - component: {fileID: 560057955}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -5306,6 +5371,8 @@ MonoBehaviour:
   rootThreeSevenButtonParent: {fileID: 1368848147}
   rootThreeSevenButton: {fileID: 1023465568}
   rootThreeSevenInversionButtonPrefab: {fileID: 1957623209395298413, guid: acd582f66ac7f1e43a8c934654f05d22, type: 3}
+  rootlessButtonParent: {fileID: 288803931}
+  rootlessButtonPrefab: {fileID: 1957623209395298413, guid: e926edfa870050e4e8899afb8d1688c4, type: 3}
 --- !u!114 &560057952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5414,8 +5481,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chordController: {fileID: 560057949}
-  uIController: {fileID: 0}
-  rootThreeSevenController: {fileID: 0}
+  uIController: {fileID: 560057951}
+  rootThreeSevenController: {fileID: 560057954}
+--- !u!114 &560057955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560057948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae4f49a18e011cf4b8f9ee567c79862a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chordController: {fileID: 560057949}
+  uIController: {fileID: 560057951}
 --- !u!1 &564248105
 GameObject:
   m_ObjectHideFlags: 0
@@ -17492,7 +17573,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1964091844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 560057955}
+        m_TargetAssemblyTypeName: RootlessController, Assembly-CSharp
+        m_MethodName: RootlessButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1964091844
 MonoBehaviour:
   m_ObjectHideFlags: 0
