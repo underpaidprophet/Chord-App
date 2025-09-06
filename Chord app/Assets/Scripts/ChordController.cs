@@ -7,6 +7,7 @@ public class ChordController : MonoBehaviour
 
     public UIController uIController;
     public RootThreeSevenController rootThreeSevenController;
+    public RootlessController rootlessController;
     Dictionary<Intervals, int> intervalsSemitonesDictionary = new Dictionary<Intervals, int>();
 
     public Chord major;
@@ -629,7 +630,32 @@ public class ChordController : MonoBehaviour
                 
 
                 break;
-            default:
+
+            case ChordVariation.Rootless:
+                foreach (Intervals interval in rootlessController.RootlessChord(chord).intervalsList)
+                {
+
+                  
+
+
+                        if (intervalIntDict[interval] > 7)
+                        {
+                            // Debug.Log(intervalIntDict[interval]);
+                            list.Add(scale.notesInScale[intervalIntDict[interval] - 1 - 7]);
+
+                        }
+                        else
+                        {
+
+                            list.Add(scale.notesInScale[intervalIntDict[interval] - 1]);
+
+                        }
+
+
+                    
+                }
+                break;
+                    default:
                 break;
         }
      

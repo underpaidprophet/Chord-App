@@ -7,6 +7,7 @@ public class InversionController : MonoBehaviour
     public ChordController chordController;
     public UIController uIController;
     public RootThreeSevenController rootThreeSevenController;
+    public RootlessController rootlessController;
     public List<int> RootPoositionSemitones(List<int> list)
     {
 
@@ -187,12 +188,72 @@ public class InversionController : MonoBehaviour
         switch (inversion)
         {
             case Inversions.RootPosition:
-                chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
+                
+                if (uIController.currentChordVariation == ChordVariation.Rootless)
+                {
+                    switch (rootlessController.currentRootlessVoicingType)
+                    {
+
+                        case RootlessVoicingType.DominantA:
+                          
+                            Notes note1 = notes[notes.Count - 1];
+                            notes.Remove(notes[notes.Count - 1]);
+                            notes.Insert(1, note1);
+                            break;
+                        case RootlessVoicingType.DominantB:
+                            Notes note2 = notes[notes.Count - 1];
+                            notes.Remove(notes[notes.Count - 1]);
+                            notes.Insert(1, note2);
+                            break;
+                        default:
+                            chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
+                }
+
                 break;
             case Inversions.FirstInversion:
-                Notes n = notes[0];
-                notes.Remove(notes[0]);
-                notes.Add(n);
+
+                if (uIController.currentChordVariation == ChordVariation.Rootless)
+                {
+                    switch (rootlessController.currentRootlessVoicingType)
+                    {
+                      
+                        case RootlessVoicingType.DominantA:
+                            Notes note1 = notes[notes.Count -1];
+                            notes.Remove(notes[notes.Count - 1]);
+                            notes.Insert(2, note1);
+                            break;
+                        case RootlessVoicingType.DominantB:
+                            Notes note2 = notes[notes.Count - 1];
+                            notes.Remove(notes[notes.Count - 1]);
+                            notes.Insert(2, note2);
+                            break;
+                        default:
+                            Notes note3 = notes[0];
+                            notes.Remove(notes[0]);
+                            notes.Add(note3);
+                            Notes note4 = notes[0];
+                            notes.Remove(notes[0]);
+                            notes.Add(note4);
+                            break;
+                    }
+
+                  
+
+                }
+                else
+                {
+                    Notes n = notes[0];
+                    notes.Remove(notes[0]);
+                    notes.Add(n);
+                }
+                
 
                 break;
             case Inversions.SecondInversion:

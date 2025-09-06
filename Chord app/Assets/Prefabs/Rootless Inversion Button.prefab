@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2167330010532821217}
   - component: {fileID: 2086105294644264829}
   - component: {fileID: 6040435860974944749}
-  - component: {fileID: 4130180594829070511}
+  - component: {fileID: 1576129342261015248}
   m_Layer: 5
   m_Name: Rootless Inversion Button
   m_TagString: Untagged
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4130180594829070511
+--- !u!114 &1576129342261015248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,14 +133,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957623209395298413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83c874e5ed358a24682c08975c3885f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a8b1cbb30430f3459a287507a087a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisR37Inversion: 0
   inversion: 0
+  thisRootlessVoicingType: 0
   chordController: {fileID: 0}
   uIController: {fileID: 0}
-  rootThreeSevenController: {fileID: 0}
+  rootlessController: {fileID: 0}
   buttonText: {fileID: 0}
   inversionName: {fileID: 7197861066454969070}
   inversionNotes: {fileID: 3322973295864319555}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 4904710682402969676}
   - component: {fileID: 3322973295864319555}
   m_Layer: 5
-  m_Name: Inversion name
+  m_Name: note names
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

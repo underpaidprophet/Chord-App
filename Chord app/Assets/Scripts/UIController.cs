@@ -493,12 +493,18 @@ public class UIController : MonoBehaviour
                     }
                 }
                 break;
+            case ChordVariation.Rootless:
+
+               
+                break;
+
+               
             default:
                 break;
         }
     
         
-
+        
         intervals = tempIntervals;
 
         List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord);
@@ -518,6 +524,10 @@ public class UIController : MonoBehaviour
                     }
 
                         break;
+                case ChordVariation.Rootless:
+                   
+                    chordIntervalsList.Add(interval);
+                    break;
                 default:
                     break;
             }   
@@ -533,6 +543,7 @@ public class UIController : MonoBehaviour
         */
         notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
 
+       
 
         switch (chordController.currentInversion)
         {
@@ -553,13 +564,15 @@ public class UIController : MonoBehaviour
                 break;
             
         }
-        
+      
         notesInChord =  inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
+       
         chordController.notesInCurrentChord = notesInChord;
+    
 
 
-      //  Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
-      //  Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
+        //  Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
+        //  Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
         Image chordRoot = firstOctaveChordDict[chordController.currentMasterChord];
 
       
@@ -572,8 +585,9 @@ public class UIController : MonoBehaviour
         List<int> tempNotes = new List<int>(notes);
         tempNotes.Sort();
         int smallestInterval = tempNotes[0];
+     
 
-      
+
         for (int i = 0; i < notes.Count; i++)
         {
             int adjustedInterval = notes[i];
@@ -592,11 +606,18 @@ public class UIController : MonoBehaviour
 
             SetKeyColour(keyImageList[adjustedInterval + offset]);
 
+            if (currentChordVariation == ChordVariation.Rootless)
+            {
+                keyTextDictToUse[keyImageList[adjustedInterval + offset]].text = chordController.intervalNamesDict[chordIntervalsList[i]];
+               
+
+            }
+
             //set the note text
-          
-        
-            keyTextDictToUse[keyImageList[adjustedInterval + offset]].text = chordController.intervalNamesDict[intervals[i]];
-           
+            else
+            {
+                keyTextDictToUse[keyImageList[adjustedInterval + offset]].text = chordController.intervalNamesDict[intervals[i]];
+            }
           
         }
 
@@ -950,6 +971,8 @@ public class UIController : MonoBehaviour
 
             List<Notes> invertedNotes = inversionController.InvertNotesList(notesInChord, script.inversion);
 
+
+            ////////
             string noteNames = "";
            
             foreach (Notes note in invertedNotes)
@@ -967,7 +990,9 @@ public class UIController : MonoBehaviour
         }
 
       
+        
     }
+
 
     public void InversionsButton()
     {

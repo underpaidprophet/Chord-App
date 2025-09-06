@@ -5189,6 +5189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uIController: {fileID: 560057951}
   rootThreeSevenController: {fileID: 560057954}
+  rootlessController: {fileID: 560057955}
   major: {fileID: 11400000, guid: 42cdb1a21c19d0e4681e1bdff0ef6fb4, type: 2}
   minor: {fileID: 11400000, guid: 403a1991cef2ac34ea388140dbb67cdc, type: 2}
   dominantSeventh: {fileID: 11400000, guid: 050681a1628f42444bb574a59a6e8a9e, type: 2}
@@ -5468,6 +5469,7 @@ MonoBehaviour:
   chordController: {fileID: 560057949}
   uIController: {fileID: 560057951}
   rootThreeSevenController: {fileID: 560057954}
+  rootlessController: {fileID: 560057955}
 --- !u!114 &560057954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5497,6 +5499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chordController: {fileID: 560057949}
   uIController: {fileID: 560057951}
+  currentRootlessVoicingType: 0
 --- !u!1 &564248105
 GameObject:
   m_ObjectHideFlags: 0
