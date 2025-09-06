@@ -191,23 +191,15 @@ public class InversionController : MonoBehaviour
                 
                 if (uIController.currentChordVariation == ChordVariation.Rootless)
                 {
-                    switch (rootlessController.currentRootlessVoicingType)
+                   if(rootlessController.currentRootlessVoicingType == RootlessVoicingType.DominantA)
                     {
+                        Debug.Log("Shoud be A " + notes[notes.Count - 1]);
 
-                        case RootlessVoicingType.DominantA:
-                          
-                            Notes note1 = notes[notes.Count - 1];
+                        Notes note1 = notes[notes.Count - 1];
                             notes.Remove(notes[notes.Count - 1]);
                             notes.Insert(1, note1);
-                            break;
-                        case RootlessVoicingType.DominantB:
-                            Notes note2 = notes[notes.Count - 1];
-                            notes.Remove(notes[notes.Count - 1]);
-                            notes.Insert(1, note2);
-                            break;
-                        default:
-                            chordController.SetChordNotes(chordController.currentChord, chordController.currentMasterChord);
-                            break;
+                       
+                           
                     }
 
                 }
@@ -221,27 +213,26 @@ public class InversionController : MonoBehaviour
 
                 if (uIController.currentChordVariation == ChordVariation.Rootless)
                 {
-                    switch (rootlessController.currentRootlessVoicingType)
+                    if (rootlessController.currentRootlessVoicingType == RootlessVoicingType.DominantB)
                     {
-                      
-                        case RootlessVoicingType.DominantA:
-                            Notes note1 = notes[notes.Count -1];
-                            notes.Remove(notes[notes.Count - 1]);
-                            notes.Insert(2, note1);
-                            break;
-                        case RootlessVoicingType.DominantB:
-                            Notes note2 = notes[notes.Count - 1];
-                            notes.Remove(notes[notes.Count - 1]);
-                            notes.Insert(2, note2);
-                            break;
-                        default:
-                            Notes note3 = notes[0];
-                            notes.Remove(notes[0]);
-                            notes.Add(note3);
-                            Notes note4 = notes[0];
-                            notes.Remove(notes[0]);
-                            notes.Add(note4);
-                            break;
+
+
+
+                        Notes note2 = notes[notes.Count - 1];
+                        notes.Remove(notes[notes.Count - 1]);
+                        notes.Insert(2, note2);
+                        break;
+                    }
+
+                    else
+                    {
+                        Notes note3 = notes[0];
+                        notes.Remove(notes[0]);
+                        notes.Add(note3);
+                        Notes note4 = notes[0];
+                        notes.Remove(notes[0]);
+                        notes.Add(note4);
+                        break;
                     }
 
                   

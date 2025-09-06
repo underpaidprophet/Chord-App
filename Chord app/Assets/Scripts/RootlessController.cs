@@ -81,7 +81,7 @@ public class RootlessController : MonoBehaviour
         }
         newList.Add(Intervals.MajorNinth);
         newList.Add(Intervals.MajorThirteenth);
-
+        
         return newList;
     }
 

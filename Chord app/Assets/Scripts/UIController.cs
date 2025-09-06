@@ -441,6 +441,7 @@ public class UIController : MonoBehaviour
     //this is the function that sets the keys 
     public void ShowChordKeys(MasterChord masterChord, Chord chord)
     {
+        
         ResetKeyColor();
 
         SetKeyboardLayoutSize(masterChord, chord);
@@ -474,12 +475,12 @@ public class UIController : MonoBehaviour
 
         List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
 
-
-
+     
         List<Intervals> intervals = new List<Intervals>(chordController.currentChord.intervalsList);
       
         List<Intervals> tempIntervals = new List<Intervals>(chordController.currentChord.intervalsList);
 
+       
         switch (currentChordVariation)
         {
             case ChordVariation.Intervals:
@@ -506,8 +507,12 @@ public class UIController : MonoBehaviour
         
         
         intervals = tempIntervals;
-
+      
+      
         List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord);
+
+        Debug.Log(notesInChord[notesInChord.Count - 1] + " should be A");
+
 
         List<Intervals> chordIntervalsList = new List<Intervals>();
         foreach (Intervals interval in chord.intervalsList)
@@ -533,7 +538,7 @@ public class UIController : MonoBehaviour
             }   
         //    chordIntervalsList.Add(item);
         }
-        
+
         /*
         if (chordController.rootThreeSeven)
         {
@@ -541,9 +546,10 @@ public class UIController : MonoBehaviour
 
         }
         */
+      
         notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
 
-       
+        Debug.Log(notesInChord.Count + " note count2");
 
         switch (chordController.currentInversion)
         {

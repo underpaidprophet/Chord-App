@@ -635,9 +635,7 @@ public class ChordController : MonoBehaviour
                 foreach (Intervals interval in rootlessController.RootlessChord(chord).intervalsList)
                 {
 
-                  
-
-
+                 
                         if (intervalIntDict[interval] > 7)
                         {
                             // Debug.Log(intervalIntDict[interval]);
@@ -651,7 +649,7 @@ public class ChordController : MonoBehaviour
 
                         }
 
-
+                        
                     
                 }
                 break;
