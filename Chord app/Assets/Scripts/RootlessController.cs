@@ -94,7 +94,40 @@ public class RootlessController : MonoBehaviour
         
         //resetting it all
         chordController.currentInversion = Inversions.RootPosition;
+        switch (chordController.chordQualityDict[chordController.currentChord.chordType])
+        {
+            case ChordQuality.Major:
+                currentRootlessVoicingType = RootlessVoicingType.MajorA;
+                break;
+            case ChordQuality.Minor:
+                currentRootlessVoicingType = RootlessVoicingType.MinorA;
+                break;
+            case ChordQuality.Dominant:
+                currentRootlessVoicingType = RootlessVoicingType.DominantA;
+                break;
+            case ChordQuality.Augmented:
+                break;
+            case ChordQuality.Diminished:
+                break;
+            case ChordQuality.HalfDiminished:
+                break;
+            default:
+                break;
+        }
 
+        /*
+         *  case RootlessVoicingType.MajorA:
+                currentRootlessVoicingType = RootlessVoicingType.MajorA;
+                break;
+         
+            case RootlessVoicingType.DominantA:
+                currentRootlessVoicingType = RootlessVoicingType.DominantA;
+                break;
+           
+            default:
+                currentRootlessVoicingType = RootlessVoicingType.MajorA;
+                break;
+         */
 
 
         foreach (Transform child in  uIController.rootlessButtonParent.transform)
@@ -153,6 +186,7 @@ public class RootlessController : MonoBehaviour
                     */
             }
 
+          
             
             script.inversionName.text = voicingTypeNameDict[script.thisRootlessVoicingType];
 
@@ -163,7 +197,8 @@ public class RootlessController : MonoBehaviour
 
         }
 
-
+       
+       
 
         uIController.ShowChordKeys(chordController.currentMasterChord, RootlessChord(chordController.currentChord));
         uIController.SetChordInversionText();

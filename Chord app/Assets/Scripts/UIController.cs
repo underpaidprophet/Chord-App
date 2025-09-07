@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     public FStartingKeyboardController fStartingKeyboardController;
     public InversionController inversionController;
     public RootThreeSevenController rootThreeSevenController;
+    public RootlessController rootlessController;
 
     //orange = ffbb40
    //   purple =  c5b0cd
@@ -161,6 +162,7 @@ public class UIController : MonoBehaviour
 
     public GameObject rootlessButtonParent;
     public GameObject rootlessButtonPrefab;
+    public GameObject rootlessButton;
 
     public Dictionary<RootThreeSevenInversions, string> rootThreeSevenInversionNamesDict = new Dictionary<RootThreeSevenInversions, string>();
 
@@ -476,9 +478,11 @@ public class UIController : MonoBehaviour
         List<int> notes = chordController.CalculatIntervalss(masterChord, chord);
 
      
-        List<Intervals> intervals = new List<Intervals>(chordController.currentChord.intervalsList);
+       // List<Intervals> intervals = new List<Intervals>(chordController.currentChord.intervalsList);
+        List<Intervals> intervals = new List<Intervals>(chord.intervalsList);
       
-        List<Intervals> tempIntervals = new List<Intervals>(chordController.currentChord.intervalsList);
+        List<Intervals> tempIntervals = new List<Intervals>(chord.intervalsList);
+       // List<Intervals> tempIntervals = new List<Intervals>(chordController.currentChord.intervalsList);
 
        
         switch (currentChordVariation)
@@ -507,12 +511,10 @@ public class UIController : MonoBehaviour
         
         
         intervals = tempIntervals;
-      
+
+     
       
         List<Notes> notesInChord = chordController.SetChordNotes(chord, masterChord);
-
-        Debug.Log(notesInChord[notesInChord.Count - 1] + " should be A");
-
 
         List<Intervals> chordIntervalsList = new List<Intervals>();
         foreach (Intervals interval in chord.intervalsList)
@@ -549,8 +551,7 @@ public class UIController : MonoBehaviour
       
         notesInChord = chordController.AdjustNotes(notesInChord, chordIntervalsList);
 
-        Debug.Log(notesInChord.Count + " note count2");
-
+      
         switch (chordController.currentInversion)
         {
             case Inversions.RootPosition:
@@ -574,8 +575,8 @@ public class UIController : MonoBehaviour
         notesInChord =  inversionController.InvertNotesList(notesInChord, chordController.currentInversion);
        
         chordController.notesInCurrentChord = notesInChord;
-    
 
+      
 
         //  Image noteRoot = firstOctaveNotesDict[notesInChord[0]];
         //  Image chordRoot = firstOctaveMasterChordDict[chordController.currentMasterChord];
@@ -590,8 +591,10 @@ public class UIController : MonoBehaviour
 
         List<int> tempNotes = new List<int>(notes);
         tempNotes.Sort();
+
+       
         int smallestInterval = tempNotes[0];
-     
+      
 
 
         for (int i = 0; i < notes.Count; i++)
@@ -648,6 +651,7 @@ public class UIController : MonoBehaviour
 
 
         CheckRootSevenButton();
+        CheckRootlessButton();
         ShowChordKeys(chordController.currentMasterChord, chordController.currentChord);
         SetChordText();
         
@@ -1046,7 +1050,22 @@ public class UIController : MonoBehaviour
 
         
     }
- 
+
+
+    public void CheckRootlessButton()
+    {
+        rootlessButton.SetActive(false);
+
+        if (chordController.chordQualityDict.ContainsKey(chordController.currentChord.chordType))
+
+        {
+            rootlessButton.SetActive(true);
+
+        }
+
+    }
+
+
 }
 
 public enum KeyboardLayout

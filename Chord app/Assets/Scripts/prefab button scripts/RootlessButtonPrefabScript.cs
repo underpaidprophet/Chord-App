@@ -28,8 +28,6 @@ public class RootlessButtonPrefabScript : MonoBehaviour
 
         uIController.ShowChordKeys(chordController.currentMasterChord, rootlessController.RootlessChord(chordController.currentChord));
 
-        Debug.Log(rootlessController.RootlessChord(chordController.currentChord).intervalsList.Count + " FEFEF");
-
 
         uIController.SetChordInversionText();
         uIController.SetChordText();

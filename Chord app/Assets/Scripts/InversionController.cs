@@ -13,14 +13,61 @@ public class InversionController : MonoBehaviour
 
         List<int> returnList = new List<int>();
 
-
-        for (int i = 0; i < list.Count; i++)
+        if (uIController.currentChordVariation == ChordVariation.Rootless)
         {
-            int semitones = list[i];
-           
-            returnList.Add(semitones);
-        }
+            switch (rootlessController.currentRootlessVoicingType)
+            {
+                case RootlessVoicingType.MajorA:
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        int semitones = list[i];
 
+                        returnList.Add(semitones);
+                    }
+                    break;
+                case RootlessVoicingType.MajorB:
+                  
+                    break;
+                case RootlessVoicingType.MinorA:
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        int semitones = list[i];
+
+                        returnList.Add(semitones);
+                    }
+                    break;
+                case RootlessVoicingType.MinorB:
+                   
+                    break;
+                case RootlessVoicingType.DominantA:
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                      
+                        int semitones = list[i];
+                        if (i == 3)
+                        {
+                            semitones = semitones - 12;
+                        }
+                        returnList.Add(semitones);
+                    }
+                    break;
+                case RootlessVoicingType.DominantB:
+
+                
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                int semitones = list[i];
+
+                returnList.Add(semitones);
+            }
+        }
         return returnList;
     }
 
@@ -29,17 +76,66 @@ public class InversionController : MonoBehaviour
 
         List<int> returnList = new List<int>();
 
-
-        for (int i = 0; i < list.Count; i++)
+        if (uIController.currentChordVariation == ChordVariation.Rootless)
         {
-            int semitones = list[i];
-            if(i == 0)
+            switch (rootlessController.currentRootlessVoicingType)
             {
-                semitones = semitones + 12;
-            }
-            returnList.Add(semitones);
-        }
+                case RootlessVoicingType.MajorA:
+                    break;
+                case RootlessVoicingType.MajorB:
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        int semitones = list[i];
+                        if (i == 0 || i == 1)
+                        {
+                            semitones = semitones + 12;
+                        }
+                        returnList.Add(semitones);
+                    }
+                    break;
+                case RootlessVoicingType.MinorA:
+                    break;
+                case RootlessVoicingType.MinorB:
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        int semitones = list[i];
+                        if (i == 0 || i == 1)
+                        {
+                            semitones = semitones + 12;
+                        }
+                        returnList.Add(semitones);
+                    }
+                    break;
+                case RootlessVoicingType.DominantA:
+                    break;
+                case RootlessVoicingType.DominantB:
 
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        int semitones = list[i];
+                        if (i == 0)
+                        {
+                            semitones = semitones + 12;
+                        }
+                        returnList.Add(semitones);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                int semitones = list[i];
+                if (i == 0)
+                {
+                    semitones = semitones + 12;
+                }
+                returnList.Add(semitones);
+            }
+        }
         return returnList;
     }
 
@@ -193,8 +289,7 @@ public class InversionController : MonoBehaviour
                 {
                    if(rootlessController.currentRootlessVoicingType == RootlessVoicingType.DominantA)
                     {
-                        Debug.Log("Shoud be A " + notes[notes.Count - 1]);
-
+                     
                         Notes note1 = notes[notes.Count - 1];
                             notes.Remove(notes[notes.Count - 1]);
                             notes.Insert(1, note1);

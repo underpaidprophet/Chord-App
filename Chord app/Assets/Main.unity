@@ -5274,6 +5274,7 @@ MonoBehaviour:
   fStartingKeyboardController: {fileID: 560057952}
   inversionController: {fileID: 560057953}
   rootThreeSevenController: {fileID: 560057954}
+  rootlessController: {fileID: 560057955}
   regularKeybaordLocation: {x: -155, y: 79}
   regularKeybaordSize: {x: 0.5, y: 0.5, z: 0.5}
   extra5KeybaordLocation: {x: -160, y: 79}
@@ -5374,6 +5375,7 @@ MonoBehaviour:
   rootThreeSevenInversionButtonPrefab: {fileID: 1957623209395298413, guid: acd582f66ac7f1e43a8c934654f05d22, type: 3}
   rootlessButtonParent: {fileID: 288803931}
   rootlessButtonPrefab: {fileID: 1957623209395298413, guid: e926edfa870050e4e8899afb8d1688c4, type: 3}
+  rootlessButton: {fileID: 1964091841}
 --- !u!114 &560057952
 MonoBehaviour:
   m_ObjectHideFlags: 0

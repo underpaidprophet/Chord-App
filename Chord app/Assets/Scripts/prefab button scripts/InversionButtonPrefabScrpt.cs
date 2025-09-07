@@ -10,6 +10,7 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
     public ChordController chordController;
     public UIController uIController;
     public RootThreeSevenController rootThreeSevenController;
+    public RootlessController rootlessController;
 
     public TextMeshProUGUI buttonText;
     public TextMeshProUGUI inversionName;
@@ -32,6 +33,11 @@ public class InversionButtonPrefabScrpt : MonoBehaviour
                 
                 uIController.ShowChordKeys(chordController.currentMasterChord, rootThreeSevenController.RootThreeSevenChord(chordController.currentChord));
                 break;
+            case ChordVariation.Rootless:
+
+                uIController.ShowChordKeys(chordController.currentMasterChord, rootlessController.RootlessChord(chordController.currentChord));
+                break;
+
             default:
                 break;
         }
