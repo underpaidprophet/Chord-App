@@ -198,8 +198,7 @@ public class RootlessController : MonoBehaviour
         }
 
        
-       
-
+         
         uIController.ShowChordKeys(chordController.currentMasterChord, RootlessChord(chordController.currentChord));
         uIController.SetChordInversionText();
     }

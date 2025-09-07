@@ -703,6 +703,7 @@ public class UIController : MonoBehaviour
                 chordInversionText.text = rootThreeSevenInversionNamesDict[(RootThreeSevenInversions)chordController.currentInversion];
                 break;
             case ChordVariation.Rootless:
+
                 break;
             default:
                 break;
