@@ -348,9 +348,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'C# Abb B
-
-'
+  m_text: '- - - -'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}
   m_sharedMaterial: {fileID: -878641085884535755, guid: d9a63d32d967ba84db60f654d031b88c, type: 2}

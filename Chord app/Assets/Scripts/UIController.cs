@@ -703,7 +703,7 @@ public class UIController : MonoBehaviour
                 chordInversionText.text = rootThreeSevenInversionNamesDict[(RootThreeSevenInversions)chordController.currentInversion];
                 break;
             case ChordVariation.Rootless:
-
+                chordInversionText.text = rootlessController.voicingTypeNameDict[rootlessController.currentRootlessVoicingType];
                 break;
             default:
                 break;
@@ -1065,9 +1065,93 @@ public class UIController : MonoBehaviour
         }
 
     }
+    public List<Notes> ListOfNotesInChord(Chord chord, Inversions inversion)
+    {
+        Chord chordToUse;
+        switch (currentChordVariation)
+        {
+            case ChordVariation.Intervals:
+                chordToUse = chord;
+                break;
+            case ChordVariation.RootThreeSeven:
+                chordToUse = rootThreeSevenController.RootThreeSevenChord(chord);
+                break;
+            case ChordVariation.Rootless:
+                chordToUse = rootlessController.RootlessChord(chord);
+                break;
+            default:
+                chordToUse = chord;
+                break;
+        }
+
+        List<int> notes = chordController.CalculatIntervalss(chordController.currentMasterChord, chordToUse);
 
 
+
+       List<Intervals> intervals = new List<Intervals>(chordToUse.intervalsList);
+
+        List<Intervals> tempIntervals = new List<Intervals>(chordToUse.intervalsList);
+
+        
+        switch (currentChordVariation)
+        {
+            case ChordVariation.Intervals:
+                break;
+            case ChordVariation.RootThreeSeven:
+                foreach (Intervals interval in intervals)
+                {
+                    if (chordController.intervalIntDict[interval] != 0 && chordController.intervalIntDict[interval] != 3 && chordController.intervalIntDict[interval] != 7)
+                    {
+                        tempIntervals.Remove(interval);
+                    }
+                }
+                break;
+            case ChordVariation.Rootless:
+                switch (rootlessController.currentRootlessVoicingType)
+                {
+                   
+                    case RootlessVoicingType.DominantA:
+                        tempIntervals = rootlessController.DominantRootlessIntervals(chordToUse);
+                        break;
+                    case RootlessVoicingType.DominantB:
+                        tempIntervals = rootlessController.DominantRootlessIntervals(chordToUse);
+                        break;
+                    default:
+                        tempIntervals = rootlessController.MajorAndMinorRootlessIntervals(chordToUse);
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+        
+
+
+       intervals = tempIntervals;
+
+        List<Notes> notesInChord = chordController.SetChordNotes(chordToUse, chordController.currentMasterChord);
+
+        foreach (Notes item in notesInChord)
+        {
+            Debug.Log(item);
+        }
+        notesInChord = chordController.AdjustNotes(notesInChord, tempIntervals);
+
+        notesInChord = inversionController.InvertNotesList(notesInChord, inversion);
+
+
+
+        List<Notes> invertedNotes = inversionController.InvertNotesList(notesInChord, inversion);
+
+        return invertedNotes;
+
+        ////////
+      
+
+    }
 }
+
+
 
 public enum KeyboardLayout
 {

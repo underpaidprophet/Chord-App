@@ -115,19 +115,7 @@ public class RootlessController : MonoBehaviour
                 break;
         }
 
-        /*
-         *  case RootlessVoicingType.MajorA:
-                currentRootlessVoicingType = RootlessVoicingType.MajorA;
-                break;
-         
-            case RootlessVoicingType.DominantA:
-                currentRootlessVoicingType = RootlessVoicingType.DominantA;
-                break;
-           
-            default:
-                currentRootlessVoicingType = RootlessVoicingType.MajorA;
-                break;
-         */
+       
 
 
         foreach (Transform child in  uIController.rootlessButtonParent.transform)
@@ -186,13 +174,28 @@ public class RootlessController : MonoBehaviour
                     */
             }
 
-          
-            
+         
+
+
             script.inversionName.text = voicingTypeNameDict[script.thisRootlessVoicingType];
 
+            List<Notes> notes = uIController.ListOfNotesInChord(RootlessChord(chordController.currentChord), script.inversion);
+
+            
+
+            string n = "";
 
 
-            script.button.onClick.AddListener(script.ClickedOn);
+            foreach (Notes note in notes)
+            {
+                n = n + chordController.noteNameDict[note] + " ";
+            }
+
+            script.inversionNotes.text  = n;
+
+
+
+        script.button.onClick.AddListener(script.ClickedOn);
 
 
         }
